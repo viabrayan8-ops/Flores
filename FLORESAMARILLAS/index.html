@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Girasoles de Ensueño</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<audio id="bg-music" autoplay loop muted>
+  <source src="fondo.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+  window.addEventListener("click", () => {
+    const music = document.getElementById("bg-music");
+    if (music.muted) {
+      music.muted = false;
+      music.play();
+    }
+  });
+
+</script>
+
+<body class="not-loaded">
+<div class="night">
+  <div class="shooting-star"></div>
+</div>
+<div class="flowers">
+  <div class="flower flower--1">
+    <div class="flower__leafs flower__leafs--1">
+
+      <div class="flower__leaf"></div>
+      <div class="flower__leaf"></div>
+      <div class="flower__leaf"></div>
+      <div class="flower__leaf"></div>
+      <div class="flower__leaf"></div>
+      <div class="flower__leaf"></div>
+      <div class="flower__leaf"></div>
+      <div class="flower__leaf"></div>
+      <div class="flower__center"></div>
+
+      <div class="flower__light flower__light--1"></div>
+      <div class="flower__light flower__light--2"></div>
+      <div class="flower__light flower__light--3"></div>
+      <div class="flower__light flower__light--4"></div>
+      <div class="flower__light flower__light--5"></div>
+      <div class="flower__light flower__light--6"></div>
+      <div class="flower__light flower__light--7"></div>
+      <div class="flower__light flower__light--8"></div>
+    </div>
+    <div class="flower__line">
+      <div class="flower__line__leaf flower__line__leaf--1"></div>
+      <div class="flower__line__leaf flower__line__leaf--2"></div>
+      <div class="flower__line__leaf flower__line__leaf--3"></div>
+      <div class="flower__line__leaf flower__line__leaf--4"></div>
+    </div>
+  </div>
+
+  <div class="flower flower--2">
+    <div class="flower__leafs flower__leafs--2">
+      <div class="flower__leaf"></div>
+      <div class="flower__leaf"></div>
+      <div class="flower__leaf"></div>
+      <div class="flower__leaf"></div>
+      <div class="flower__leaf"></div>
+      <div class="flower__leaf"></div>
+      <div class="flower__leaf"></div>
+      <div class="flower__leaf"></div>
+      <div class="flower__center"></div>
+
+      <div class="flower__light flower__light--1"></div>
+      <div class="flower__light flower__light--2"></div>
+      <div class="flower__light flower__light--3"></div>
+      <div class="flower__light flower__light--4"></div>
+      <div class="flower__light flower__light--5"></div>
+      <div class="flower__light flower__light--6"></div>
+      <div class="flower__light flower__light--7"></div>
+      <div class="flower__light flower__light--8"></div>
+    </div>
+    <div class="flower__line">
+      <div class="flower__line__leaf flower__line__leaf--1"></div>
+      <div class="flower__line__leaf flower__line__leaf--2"></div>
+      <div class="flower__line__leaf flower__line__leaf--3"></div>
+      <div class="flower__line__leaf flower__line__leaf--4"></div>
+    </div>
+  </div>
+
+  <div class="flower flower--3">
+    <div class="flower__leafs flower__leafs--3">
+      <div class="flower__leaf"></div>
+      <div class="flower__leaf"></div>
+      <div class="flower__leaf"></div>
+      <div class="flower__leaf"></div>
+      <div class="flower__leaf"></div>
+      <div class="flower__leaf"></div>
+      <div class="flower__leaf"></div>
+      <div class="flower__leaf"></div>
+      <div class="flower__center"></div>
+
+      <div class="flower__light flower__light--1"></div>
+      <div class="flower__light flower__light--2"></div>
+      <div class="flower__light flower__light--3"></div>
+      <div class="flower__light flower__light--4"></div>
+      <div class="flower__light flower__light--5"></div>
+      <div class="flower__light flower__light--6"></div>
+      <div class="flower__light flower__light--7"></div>
+      <div class="flower__light flower__light--8"></div>
+    </div>
+    <div class="flower__line">
+      <div class="flower__line__leaf flower__line__leaf--1"></div>
+      <div class="flower__line__leaf flower__line__leaf--2"></div>
+      <div class="flower__line__leaf flower__line__leaf--3"></div>
+      <div class="flower__line__leaf flower__line__leaf--4"></div>
+    </div>
+  </div>
+</div>
+<div class="poem-card">
+  <p id="poem-text"></p>
+</div>
+<script src="script.js"></script>
+</body>
+</html>
