@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- Música -->
+    <!-- Música de fondo -->
     <audio id="musica" loop>
         <source src="https://assets.mixkit.co/music/preview/mixkit-romantic-sunset-687.mp3" type="audio/mpeg">
     </audio>
@@ -51,99 +51,7 @@
                 </div>
             </div>
         </div>
-        <!-- Sección Música -->
-<section id="seccion-musica" class="hidden">
-    <div class="playlist-container">
-        <h2><i class="fas fa-music"></i> Nuestra Playlist Especial</h2>
-        <p class="subtitulo">Canciones que cuentan algo de nosotros</p>
         
-        <!-- Canción 1: Sweet Child O' Mine -->
-        <div class="cancion-card">
-            <div class="album-cover" style="background: linear-gradient(135deg, #8a2387, #e94057, #f27121);">
-                <span class="emoji-album">🎸✨</span>
-            </div>
-            <div class="cancion-info">
-                <h3>Sweet Child O' Mine</h3>
-                <p class="artista">Guns N' Roses</p>
-                <p class="significado">
-                    "Eres esa persona que hace brillar lo simple. Como la canción dice: 
-                    'Where do we go now?'... Pues hacia más momentos como estos 🤘"
-                </p>
-                <div class="reproductor">
-                    <div class="youtube-embed">
-                        <iframe 
-                            src="https://www.youtube.com/embed/1w7OgIMMRc4?modestbranding=1&rel=0&controls=1&showinfo=0"
-                            frameborder="0" 
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                            allowfullscreen>
-                        </iframe>
-                    </div>
-                    <p class="fuente"><i class="fab fa-youtube"></i> Guns N' Roses - Sweet Child O' Mine</p>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Canción 2: Yo Quisiera -->
-        <div class="cancion-card">
-            <div class="album-cover" style="background: linear-gradient(135deg, #0099f7, #f11712);">
-                <span class="emoji-album">💖🎵</span>
-            </div>
-            <div class="cancion-info">
-                <h3>Yo Quisiera</h3>
-                <p class="artista">Reik</p>
-                <p class="significado">
-                    "Esta canción me recuerda a ti cada vez que la escucho. 
-                    Tiene esa mezcla de dulzura y nostalgia que siento en nuestras conversaciones 🌙"
-                </p>
-                <div class="reproductor">
-                    <div class="youtube-embed">
-                        <iframe 
-                            src="https://www.youtube.com/embed/v27COkZT4GY?modestbranding=1&rel=0&controls=1&showinfo=0"
-                            frameborder="0" 
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                            allowfullscreen>
-                        </iframe>
-                    </div>
-                    <p class="fuente"><i class="fab fa-youtube"></i> Reik - Yo Quisiera</p>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Canción 3: Cars Outside -->
-        <div class="cancion-card">
-            <div class="album-cover" style="background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);">
-                <span class="emoji-album">🏎️🎶</span>
-            </div>
-            <div class="cancion-info">
-                <h3>Cars Outside</h3>
-                <p class="artista">James Arthur</p>
-                <p class="significado">
-                    "Gracias por dedicarme esta canción. Cada vez que la escucho pienso en 
-                    esos momentos en que, a pesar de la distancia, sentimos cercanía 🚗💨"
-                </p>
-                <div class="reproductor">
-                    <div class="youtube-embed">
-                        <iframe 
-                            src="https://www.youtube.com/embed/QZKrLIoMyxY?modestbranding=1&rel=0&controls=1&showinfo=0"
-                            frameborder="0" 
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                            allowfullscreen>
-                        </iframe>
-                    </div>
-                    <p class="fuente"><i class="fab fa-youtube"></i> James Arthur - Cars Outside</p>
-                </div>
-            </div>
-        </div>
-        
-        <div class="playlist-footer">
-            <p class="dedicatoria">Esta playlist es un abrazo musical desde Perú 🇵🇪 hasta Colombia 🇨🇴</p>
-            <button id="btn-siguiente-fotos" class="btn-siguiente">
-                <i class="fas fa-images"></i> Ver Nuestras Aventuras
-            </button>
-        </div>
-    </div>
-</section>
-</section>
         <div id="contenido-interior" class="hidden">
             <div class="diploma">
                 <div class="diploma-header">
@@ -182,14 +90,106 @@
                 </div>
             </div>
             
-            <!-- BOTÓN CORREGIDO: Fuera del contenido-interior y a la derecha -->
+            <!-- BOTÓN CAMBIADO: Ahora lleva a la música -->
             <button id="btn-final" class="btn-magico">
-                <i class="fas fa-heart"></i> Guardar este momento
+                <i class="fas fa-music"></i> Continuar con la Música
             </button>
         </div>
     </div>
 
+    <!-- Sección Música (FUERA de la carta) -->
+    <section id="seccion-musica" class="hidden">
+        <div class="playlist-container">
+            <h2><i class="fas fa-music"></i> Nuestra Playlist Especial</h2>
+            <p class="subtitulo">Canciones que cuentan algo de nosotros</p>
+            
+            <!-- Canción 1: Sweet Child O' Mine -->
+            <div class="cancion-card">
+                <div class="album-cover" style="background: linear-gradient(135deg, #8a2387, #e94057, #f27121);">
+                    <span class="emoji-album">🎸✨</span>
+                </div>
+                <div class="cancion-info">
+                    <h3>Sweet Child O' Mine</h3>
+                    <p class="artista">Guns N' Roses</p>
+                    <p class="significado">
+                        "Eres esa persona que hace brillar lo simple. Como la canción dice: 
+                        'Where do we go now?'... Pues hacia más momentos como estos 🤘"
+                    </p>
+                    <div class="reproductor">
+                        <div class="youtube-embed">
+                            <iframe 
+                                src="https://www.youtube.com/embed/1w7OgIMMRc4?modestbranding=1&rel=0&controls=1&showinfo=0"
+                                frameborder="0" 
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowfullscreen>
+                            </iframe>
+                        </div>
+                        <p class="fuente"><i class="fab fa-youtube"></i> Guns N' Roses - Sweet Child O' Mine</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Canción 2: Yo Quisiera -->
+            <div class="cancion-card">
+                <div class="album-cover" style="background: linear-gradient(135deg, #0099f7, #f11712);">
+                    <span class="emoji-album">💖🎵</span>
+                </div>
+                <div class="cancion-info">
+                    <h3>Yo Quisiera</h3>
+                    <p class="artista">Reik</p>
+                    <p class="significado">
+                        "Esta canción me recuerda a ti cada vez que la escucho. 
+                        Tiene esa mezcla de dulzura y nostalgia que siento en nuestras conversaciones 🌙"
+                    </p>
+                    <div class="reproductor">
+                        <div class="youtube-embed">
+                            <iframe 
+                                src="https://www.youtube.com/embed/v27COkZT4GY?modestbranding=1&rel=0&controls=1&showinfo=0"
+                                frameborder="0" 
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowfullscreen>
+                            </iframe>
+                        </div>
+                        <p class="fuente"><i class="fab fa-youtube"></i> Reik - Yo Quisiera</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Canción 3: Cars Outside -->
+            <div class="cancion-card">
+                <div class="album-cover" style="background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);">
+                    <span class="emoji-album">🏎️🎶</span>
+                </div>
+                <div class="cancion-info">
+                    <h3>Cars Outside</h3>
+                    <p class="artista">James Arthur</p>
+                    <p class="significado">
+                        "Gracias por dedicarme esta canción. Cada vez que la escucho pienso en 
+                        esos momentos en que, a pesar de la distancia, sentimos cercanía 🚗💨"
+                    </p>
+                    <div class="reproductor">
+                        <div class="youtube-embed">
+                            <iframe 
+                                src="https://www.youtube.com/embed/QZKrLIoMyxY?modestbranding=1&rel=0&controls=1&showinfo=0"
+                                frameborder="0" 
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowfullscreen>
+                            </iframe>
+                        </div>
+                        <p class="fuente"><i class="fab fa-youtube"></i> James Arthur - Cars Outside</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="playlist-footer">
+                <p class="dedicatoria">Esta playlist es un abrazo musical desde Perú 🇵🇪 hasta Colombia 🇨🇴</p>
+                <button id="btn-siguiente-fotos" class="btn-siguiente">
+                    <i class="fas fa-images"></i> Ver Nuestras Aventuras
+                </button>
+            </div>
+        </div>
+    </section>
+
     <script src="script.js"></script>
 </body>
 </html>
-
