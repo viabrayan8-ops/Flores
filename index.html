@@ -4,12 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Para Ti ✨</title>
+    <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- Música de fondo -->
+    <!-- Música -->
     <audio id="musica" loop>
         <source src="https://assets.mixkit.co/music/preview/mixkit-romantic-sunset-687.mp3" type="audio/mpeg">
     </audio>
@@ -36,9 +36,7 @@
     <!-- Carta -->
     <div id="carta-container" class="hidden">
         <!-- Fondo animado -->
-        <div id="fondo-animado">
-            <!-- Snoopies y gatitos se generarán con JavaScript -->
-        </div>
+        <div id="fondo-animado"></div>
         
         <div class="sobre" id="sobre-exterior">
             <div class="sobre-frontal">
@@ -54,6 +52,7 @@
         
         <div id="contenido-interior" class="hidden">
             <div class="diploma">
+                <!-- contenido del diploma -->
                 <div class="diploma-header">
                     <h2>DIPLOMA</h2>
                     <h3>A MI PERSONA ESPECIAL</h3>
@@ -90,20 +89,20 @@
                 </div>
             </div>
             
-            <!-- BOTÓN CAMBIADO: Ahora lleva a la música -->
-            <button id="btn-final" class="btn-magico">
-                <i class="fas fa-music"></i> Continuar con la Música
+            <!-- BOTÓN SIMPLE -->
+            <button id="btn-ir-musica" class="btn-magico">
+                <i class="fas fa-music"></i> Escuchar Nuestra Playlist
             </button>
         </div>
     </div>
 
-    <!-- Sección Música (FUERA de la carta) -->
-    <section id="seccion-musica" class="hidden">
+    <!-- Sección Música (SOLO ESTA) -->
+    <div id="seccion-musica" class="hidden">
         <div class="playlist-container">
             <h2><i class="fas fa-music"></i> Nuestra Playlist Especial</h2>
             <p class="subtitulo">Canciones que cuentan algo de nosotros</p>
             
-            <!-- Canción 1: Sweet Child O' Mine -->
+            <!-- Canción 1 -->
             <div class="cancion-card">
                 <div class="album-cover" style="background: linear-gradient(135deg, #8a2387, #e94057, #f27121);">
                     <span class="emoji-album">🎸✨</span>
@@ -129,7 +128,7 @@
                 </div>
             </div>
             
-            <!-- Canción 2: Yo Quisiera -->
+            <!-- Canción 2 -->
             <div class="cancion-card">
                 <div class="album-cover" style="background: linear-gradient(135deg, #0099f7, #f11712);">
                     <span class="emoji-album">💖🎵</span>
@@ -155,7 +154,7 @@
                 </div>
             </div>
             
-            <!-- Canción 3: Cars Outside -->
+            <!-- Canción 3 -->
             <div class="cancion-card">
                 <div class="album-cover" style="background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);">
                     <span class="emoji-album">🏎️🎶</span>
@@ -183,12 +182,12 @@
             
             <div class="playlist-footer">
                 <p class="dedicatoria">Esta playlist es un abrazo musical desde Perú 🇵🇪 hasta Colombia 🇨🇴</p>
-                <button id="btn-siguiente-fotos" class="btn-siguiente">
-                    <i class="fas fa-images"></i> Ver Nuestras Aventuras
+                <button id="btn-fin-musica" class="btn-siguiente">
+                    <i class="fas fa-heart"></i> ¡Gracias por Escuchar!
                 </button>
             </div>
         </div>
-    </section>
+    </div>
 
     <script src="script.js"></script>
 </body>
