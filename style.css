@@ -441,3 +441,66 @@ body {
         font-size: 1.2rem;
     }
     }
+/* ===== FONDO ANIMADO ===== */
+#fondo-animado {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: -1;
+    overflow: hidden;
+}
+
+.snoopy-flotante, .gatito-flotante {
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    opacity: 0.7;
+    filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.5));
+    z-index: -1;
+}
+
+.snoopy-flotante {
+    background-image: url('snoopy.png'); /* Cambia por tu imagen */
+}
+
+.gatito-flotante {
+    background-image: url('gatito.png'); /* Cambia por tu imagen */
+}
+
+/* Efecto de rotación suave */
+@keyframes flotar {
+    0% {
+        transform: translateY(100vh) rotate(0deg);
+        opacity: 0;
+    }
+    10% {
+        opacity: 0.8;
+    }
+    90% {
+        opacity: 0.8;
+    }
+    100% {
+        transform: translateY(-100px) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+/* Diferentes velocidades */
+.flotar-lento {
+    animation: flotar 25s linear infinite;
+}
+
+.flotar-medio {
+    animation: flotar 20s linear infinite;
+}
+
+.flotar-rapido {
+    animation: flotar 15s linear infinite;
+}
+
