@@ -13,7 +13,7 @@ body {
     color: white;
 }
 
-/* ===== MÚSICA ===== */
+/* ===== MÚSICA CONTROLS ===== */
 .music-controls {
     position: fixed;
     top: 20px;
@@ -52,7 +52,7 @@ body {
     opacity: 0.9;
 }
 
-/* ===== TEXTO ===== */
+/* ===== TEXTO INICIAL ===== */
 .container {
     position: absolute;
     top: 50%;
@@ -93,12 +93,8 @@ body {
 }
 
 @keyframes flotar {
-    from {
-        transform: translateY(100vh);
-    }
-    to {
-        transform: translateY(-10vh);
-    }
+    from { transform: translateY(100vh); }
+    to { transform: translateY(-10vh); }
 }
 
 /* ===== FLASH ===== */
@@ -129,7 +125,6 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    /* FONDO PASTEL CORREGIDO */
     background: linear-gradient(135deg, #ffe6f0 0%, #fff0f7 50%, #e6f0ff 100%);
     z-index: 10000;
     display: flex;
@@ -156,9 +151,7 @@ body {
     position: relative;
     transform-style: preserve-3d;
     transition: transform 0.5s;
-    box-shadow: 
-        0 20px 50px rgba(255, 107, 157, 0.4),
-        inset 0 -10px 30px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 20px 50px rgba(255, 107, 157, 0.4);
     border: 5px solid rgba(255, 255, 255, 0.2);
     display: flex;
     flex-direction: column;
@@ -177,18 +170,9 @@ body {
 }
 
 @keyframes abrirSobre {
-    0% {
-        transform: rotateX(0);
-    }
-    50% {
-        transform: rotateX(-60deg);
-        box-shadow: 0 40px 80px rgba(255, 107, 157, 0.6);
-    }
-    100% {
-        transform: rotateX(-120deg);
-        opacity: 0;
-        display: none;
-    }
+    0% { transform: rotateX(0); }
+    50% { transform: rotateX(-60deg); box-shadow: 0 40px 80px rgba(255, 107, 157, 0.6); }
+    100% { transform: rotateX(-120deg); opacity: 0; display: none; }
 }
 
 .texto-portada h1 {
@@ -244,14 +228,8 @@ body {
 }
 
 @keyframes aparecerContenido {
-    from {
-        opacity: 0;
-        transform: translateY(50px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+    from { opacity: 0; transform: translateY(50px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
 /* DIPLOMA */
@@ -386,7 +364,7 @@ body {
     color: #8b0000;
 }
 
-/* BOTÓN CORREGIDO - AHORA A LA DERECHA */
+/* BOTÓN */
 .btn-magico {
     background: #ff6b9d;
     border: none;
@@ -400,93 +378,13 @@ body {
     display: inline-flex;
     align-items: center;
     gap: 10px;
-    position: fixed;
-    bottom: 30px;
-    right: 30px;
-    z-index: 10002;
+    margin-top: 40px;
 }
 
 .btn-magico:hover {
     background: #ff8fab;
     transform: scale(1.05);
     box-shadow: 0 15px 40px rgba(255, 107, 157, 0.6);
-}
-
-/* ===== FONDO ANIMADO ===== */
-#fondo-animado {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    z-index: 1;
-    overflow: hidden;
-}
-
-.snoopy-flotante, .gatito-flotante {
-    position: absolute;
-    width: 80px;
-    height: 80px;
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
-    opacity: 0.7;
-    filter: drop-shadow(0 0 8px rgba(255, 107, 157, 0.6));
-    z-index: 1;
-    font-size: 60px;
-    text-align: center;
-    line-height: 80px;
-}
-
-/* Si no hay imágenes, mostramos emojis */
-.snoopy-flotante::after {
-    content: '🐶';
-}
-
-.gatito-flotante::after {
-    content: '🐱';
-}
-
-/* Efecto de rotación suave */
-@keyframes flotar {
-    0% {
-        transform: translateY(100vh) rotate(0deg);
-        opacity: 0;
-    }
-    10% {
-        opacity: 0.8;
-    }
-    90% {
-        opacity: 0.8;
-    }
-    100% {
-        transform: translateY(-100px) rotate(360deg);
-        opacity: 0;
-    }
-}
-
-/* Animación de giro suave */
-@keyframes girarSuave {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
-}
-
-/* Diferentes velocidades */
-.flotar-lento {
-    animation: flotar 25s linear infinite;
-}
-
-.flotar-medio {
-    animation: flotar 20s linear infinite;
-}
-
-.flotar-rapido {
-    animation: flotar 15s linear infinite;
-}
-
-.girando {
-    animation: girarSuave 20s linear infinite;
 }
 
 /* ===== SECCIÓN MÚSICA ===== */
@@ -503,14 +401,6 @@ body {
     align-items: center;
     padding: 20px;
     overflow-y: auto;
-    opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.8s ease, transform 0.8s ease;
-}
-
-#seccion-musica.mostrando {
-    opacity: 1;
-    transform: translateY(0);
 }
 
 .playlist-container {
@@ -530,10 +420,6 @@ body {
     color: #ff6b9d;
     text-align: center;
     margin-bottom: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 15px;
 }
 
 .subtitulo {
@@ -551,22 +437,7 @@ body {
     border-radius: 20px;
     padding: 25px;
     margin-bottom: 30px;
-    transition: all 0.4s ease;
     border: 1px solid rgba(255, 255, 255, 0.05);
-    opacity: 0;
-    transform: translateY(20px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-}
-
-.cancion-card.mostrando {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-.cancion-card:hover {
-    transform: translateY(-5px);
-    background: rgba(255, 255, 255, 0.12);
-    border-color: rgba(255, 107, 157, 0.3);
 }
 
 .album-cover {
@@ -582,7 +453,6 @@ body {
 
 .emoji-album {
     font-size: 3rem;
-    filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.5));
 }
 
 .cancion-info {
@@ -613,18 +483,12 @@ body {
     border-left: 3px solid #ff6b9d;
 }
 
-/* Reproductor */
-.reproductor {
-    margin-top: 15px;
-}
-
-/* YOUTUBE EMBED ESTILOS */
+/* YouTube embed */
 .youtube-embed {
     width: 100%;
     border-radius: 12px;
     overflow: hidden;
     margin-top: 10px;
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
 }
 
 .youtube-embed iframe {
@@ -666,91 +530,28 @@ body {
     color: white;
     border-radius: 50px;
     cursor: pointer;
-    transition: all 0.3s;
     display: inline-flex;
     align-items: center;
     gap: 12px;
-    box-shadow: 0 10px 25px rgba(255, 107, 157, 0.4);
 }
 
 .btn-siguiente:hover {
     transform: scale(1.05);
-    box-shadow: 0 15px 35px rgba(255, 107, 157, 0.6);
 }
 
 /* Responsive */
 @media (max-width: 768px) {
-    #texto {
-        font-size: 2.5rem;
+    #texto { font-size: 2.5rem; }
+    .sobre-frontal { height: 350px; padding: 20px; }
+    .texto-portada h1 { font-size: 2.2rem; }
+    .diploma { padding: 25px; }
+    .diploma-header h2 { font-size: 2.2rem; }
+    .diploma-header h3 { font-size: 1.5rem; }
+    .papel-carta { padding: 30px; font-size: 1.1rem; }
+    .btn-magico { padding: 12px 25px; font-size: 1rem; }
+    .cancion-card { flex-direction: column; text-align: center; }
+    .album-cover { width: 150px; height: 150px; margin: 0 auto; }
+    .playlist-container { padding: 25px; }
+    .playlist-container h2 { font-size: 2.2rem; }
+    .youtube-embed iframe { height: 150px; }
     }
-    
-    .sobre-frontal {
-        height: 350px;
-        padding: 20px;
-    }
-    
-    .texto-portada h1 {
-        font-size: 2.2rem;
-    }
-    
-    .diploma {
-        padding: 25px;
-        margin: 0 auto 30px;
-    }
-    
-    .diploma-header h2 {
-        font-size: 2.2rem;
-    }
-    
-    .diploma-header h3 {
-        font-size: 1.5rem;
-    }
-    
-    .papel-carta {
-        padding: 30px;
-        font-size: 1.1rem;
-    }
-    
-    .btn-magico {
-        padding: 12px 25px;
-        font-size: 1rem;
-        bottom: 20px;
-        right: 20px;
-    }
-    
-    .snoopy-flotante, .gatito-flotante {
-        width: 60px;
-        height: 60px;
-        font-size: 45px;
-        line-height: 60px;
-    }
-    
-    .cancion-card {
-        flex-direction: column;
-        text-align: center;
-    }
-    
-    .album-cover {
-        width: 150px;
-        height: 150px;
-        margin: 0 auto;
-    }
-    
-    .playlist-container {
-        padding: 25px;
-    }
-    
-    .playlist-container h2 {
-        font-size: 2.2rem;
-    }
-    
-    .youtube-embed iframe {
-        height: 150px;
-    }
-}
-
-@media (max-width: 480px) {
-    .youtube-embed iframe {
-        height: 120px;
-    }
-                          }
