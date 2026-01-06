@@ -1,4 +1,4 @@
-// ===== CONFIGURACIÓN =====
+// ===== CONFIGURACIÓN SIMPLE =====
 const textos = [
     "Para mi persona especial...",
     "La que ilumina mis días desde Colombia 🇨🇴",
@@ -16,24 +16,60 @@ const textos = [
     "3... 2... 1... 💫"
 ];
 
-// ===== ELEMENTOS =====
-const textoElemento = document.getElementById("texto");
-const flashOverlay = document.getElementById("flash-overlay");
-const cartaContainer = document.getElementById("carta-container");
-const sobreExterior = document.getElementById("sobre-exterior");
-const contenidoInterior = document.getElementById("contenido-interior");
-const particlesContainer = document.getElementById("particles");
-const musica = document.getElementById("musica");
-const musicToggle = document.getElementById("music-toggle");
-const musicLabel = document.querySelector('.music-label');
-const btnIrMusica = document.getElementById('btn-ir-musica');
-const seccionMusica = document.getElementById('seccion-musica');
-const btnFinMusica = document.getElementById('btn-fin-musica');
+// ===== VARIABLES GLOBALES =====
+let indexTexto = 0;
+let musicaFondo;
 
-let index = 0;
+// ===== INICIAR TODO CUANDO LA PÁGINA CARGUE =====
+document.addEventListener('DOMContentLoaded', function() {
+    console.log("✅ Página cargada, iniciando...");
+    
+    // Iniciar música de fondo
+    iniciarMusicaFondo();
+    
+    // Crear partículas
+    crearParticulas();
+    
+    // Mostrar primer texto
+    mostrarSiguienteTexto();
+    
+    // Configurar botones
+    configurarBotones();
+});
+
+// ===== MÚSICA DE FONDO =====
+function iniciarMusicaFondo() {
+    musicaFondo = document.getElementById('musica');
+    const musicToggle = document.getElementById('music-toggle');
+    const musicLabel = document.querySelector('.music-label');
+    
+    if (!musicaFondo || !musicToggle) return;
+    
+    // Auto-iniciar con primer clic
+    document.addEventListener('click', function iniciarConClick() {
+        musicaFondo.play().catch(e => console.log("Esperando interacción..."));
+        document.removeEventListener('click', iniciarConClick);
+    });
+    
+    // Control de play/pause
+    musicToggle.addEventListener('click', function() {
+        if (musicaFondo.paused) {
+            musicaFondo.play();
+            musicToggle.innerHTML = '<i class="fas fa-pause"></i>';
+            if (musicLabel) musicLabel.textContent = 'Música: On';
+        } else {
+            musicaFondo.pause();
+            musicToggle.innerHTML = '<i class="fas fa-play"></i>';
+            if (musicLabel) musicLabel.textContent = 'Música: Off';
+        }
+    });
+}
 
 // ===== PARTÍCULAS =====
 function crearParticulas() {
+    const particlesContainer = document.getElementById('particles');
+    if (!particlesContainer) return;
+    
     for (let i = 0; i < 50; i++) {
         const particle = document.createElement("span");
         particle.style.left = Math.random() * 100 + "vw";
@@ -44,41 +80,33 @@ function crearParticulas() {
     }
 }
 
-// ===== CONTROL MÚSICA =====
-if (musicToggle && musicLabel) {
-    musicToggle.addEventListener('click', () => {
-        if (musica.paused) {
-            musica.play();
-            musicToggle.innerHTML = '<i class="fas fa-pause"></i>';
-            musicLabel.textContent = 'Música: On';
-        } else {
-            musica.pause();
-            musicToggle.innerHTML = '<i class="fas fa-play"></i>';
-            musicLabel.textContent = 'Música: Off';
-        }
-    });
-}
-
-// Auto-iniciar música con interacción
-document.addEventListener('click', function iniciarMusica() {
-    if (musica.paused) {
-        musica.play().catch(e => console.log("Música esperando interacción"));
-    }
-    document.removeEventListener('click', iniciarMusica);
-}, { once: true });
-
 // ===== MOSTRAR TEXTOS =====
-function mostrarTexto() {
-    textoElemento.style.opacity = 0;
-
+function mostrarSiguienteTexto() {
+    const textoElemento = document.getElementById('texto');
+    if (!textoElemento || indexTexto >= textos.length) {
+        // Terminados los textos, activar flash
+        setTimeout(activarFlash, 2000);
+        return;
+    }
+    
+    // Efecto fade out
+    textoElemento.style.opacity = '0';
+    
     setTimeout(() => {
-        textoElemento.textContent = textos[index];
-        textoElemento.style.opacity = 1;
-
-        index++;
-        if (index < textos.length) {
-            setTimeout(mostrarTexto, 4000);
+        // Cambiar texto
+        textoElemento.textContent = textos[indexTexto];
+        
+        // Efecto fade in
+        textoElemento.style.opacity = '1';
+        
+        // Pasar al siguiente
+        indexTexto++;
+        
+        // Programar siguiente texto (4 segundos)
+        if (indexTexto < textos.length) {
+            setTimeout(mostrarSiguienteTexto, 4000);
         } else {
+            // Último texto, esperar y mostrar flash
             setTimeout(activarFlash, 4000);
         }
     }, 2000);
@@ -86,77 +114,83 @@ function mostrarTexto() {
 
 // ===== FLASH =====
 function activarFlash() {
-    flashOverlay.style.opacity = '1';
-    const duracionFlash = 4000;
-    const startTime = Date.now();
+    const flashOverlay = document.getElementById('flash-overlay');
+    if (!flashOverlay) {
+        mostrarCarta();
+        return;
+    }
     
-    function animar() {
-        const elapsed = Date.now() - startTime;
-        const progress = Math.min(elapsed / duracionFlash, 1);
-        
-        const scale = progress * 300;
+    flashOverlay.style.opacity = '1';
+    let scale = 0;
+    const velocidad = 5;
+    
+    function animarFlash() {
+        scale += velocidad;
         flashOverlay.style.width = `${scale}vh`;
         flashOverlay.style.height = `${scale}vh`;
         
-        if (progress < 0.7) {
-            flashOverlay.style.opacity = '1';
-        } else {
-            flashOverlay.style.opacity = `${1 - (progress - 0.7) / 0.3}`;
-        }
-        
-        if (progress < 1) {
-            requestAnimationFrame(animar);
+        if (scale < 300) {
+            requestAnimationFrame(animarFlash);
         } else {
             flashOverlay.style.opacity = '0';
-            mostrarCarta();
+            setTimeout(() => {
+                mostrarCarta();
+            }, 500);
         }
     }
     
-    requestAnimationFrame(animar);
+    animarFlash();
 }
 
 // ===== MOSTRAR CARTA =====
 function mostrarCarta() {
-    document.querySelector('.container').style.display = 'none';
-    particlesContainer.style.display = 'none';
-    document.querySelector('.music-controls').style.display = 'none';
+    // Ocultar elementos iniciales
+    const container = document.querySelector('.container');
+    const particles = document.getElementById('particles');
+    const musicControls = document.querySelector('.music-controls');
     
-    setTimeout(() => {
+    if (container) container.style.display = 'none';
+    if (particles) particles.style.display = 'none';
+    if (musicControls) musicControls.style.display = 'none';
+    
+    // Mostrar carta
+    const cartaContainer = document.getElementById('carta-container');
+    if (cartaContainer) {
         cartaContainer.classList.remove('hidden');
-        iniciarCarta();
-    }, 500);
+        configurarCarta();
+    }
 }
 
-// ===== INICIAR CARTA =====
-function iniciarCarta() {
+// ===== CONFIGURAR CARTA =====
+function configurarCarta() {
+    const sobreExterior = document.getElementById('sobre-exterior');
+    const contenidoInterior = document.getElementById('contenido-interior');
+    const btnIrMusica = document.getElementById('btn-ir-musica');
+    
     // Abrir sobre
-    sobreExterior.addEventListener('click', function() {
-        sobreExterior.classList.add('abriendo');
-        
-        setTimeout(() => {
-            sobreExterior.style.display = 'none';
-            contenidoInterior.classList.remove('hidden');
-            efectoEscrituraCarta();
-        }, 1500);
-    });
+    if (sobreExterior) {
+        sobreExterior.addEventListener('click', function() {
+            this.classList.add('abriendo');
+            
+            setTimeout(() => {
+                if (contenidoInterior) {
+                    contenidoInterior.classList.remove('hidden');
+                    efectoEscrituraCarta();
+                }
+            }, 1500);
+        });
+    }
     
     // Botón para ir a música
     if (btnIrMusica) {
         btnIrMusica.addEventListener('click', function() {
-            // Ocultar carta
-            cartaContainer.classList.add('hidden');
+            const cartaContainer = document.getElementById('carta-container');
+            const seccionMusica = document.getElementById('seccion-musica');
             
-            // Mostrar música después de 0.5 segundos
-            setTimeout(() => {
+            if (cartaContainer && seccionMusica) {
+                cartaContainer.classList.add('hidden');
                 seccionMusica.classList.remove('hidden');
-                
-                // Configurar botón final de música
-                if (btnFinMusica) {
-                    btnFinMusica.addEventListener('click', function() {
-                        alert('🎵 Gracias por escuchar nuestra playlist especial!\n\nEl regalo continúa... ✨');
-                    });
-                }
-            }, 500);
+            }
         });
     }
 }
@@ -164,7 +198,6 @@ function iniciarCarta() {
 // ===== EFECTO ESCRITURA CARTA =====
 function efectoEscrituraCarta() {
     const parrafos = document.querySelectorAll('.papel-carta p');
-    
     parrafos.forEach((parrafo, index) => {
         const textoOriginal = parrafo.textContent;
         parrafo.textContent = '';
@@ -183,37 +216,32 @@ function efectoEscrituraCarta() {
     });
 }
 
-// ===== INICIAR TODO =====
-function iniciarTodo() {
-    console.log("🎁 Regalo especial iniciando...");
-    crearParticulas();
-    mostrarTexto();
+// ===== CONFIGURAR BOTONES MUSICA =====
+function configurarBotones() {
+    const btnFinMusica = document.getElementById('btn-fin-musica');
+    if (btnFinMusica) {
+        btnFinMusica.addEventListener('click', function() {
+            alert('🎵 ¡Gracias por escuchar nuestra playlist especial!\n\nEl viaje continúa... ✨');
+        });
+    }
 }
 
-// Esperar a que cargue la página
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', iniciarTodo);
-} else {
-    iniciarTodo();
-}
-
-// ===== FUNCIONES DEBUG =====
+// ===== FUNCIONES DE DEBUG (para probar) =====
 window.debug = {
     saltarACarta: function() {
-        index = textos.length;
         document.querySelector('.container').style.display = 'none';
-        particlesContainer.style.display = 'none';
+        document.getElementById('particles').style.display = 'none';
         document.querySelector('.music-controls').style.display = 'none';
-        flashOverlay.style.display = 'none';
-        cartaContainer.classList.remove('hidden');
-        sobreExterior.style.display = 'none';
-        contenidoInterior.classList.remove('hidden');
+        document.getElementById('carta-container').classList.remove('hidden');
     },
     saltarAMusica: function() {
-        cartaContainer.classList.add('hidden');
-        seccionMusica.classList.remove('hidden');
+        document.getElementById('carta-container').classList.add('hidden');
+        document.getElementById('seccion-musica').classList.remove('hidden');
     },
     reiniciar: function() {
         location.reload();
     }
 };
+
+console.log("🎁 Script cargado correctamente!");
+console.log("Usa debug.saltarACarta() o debug.saltarAMusica() para probar");
