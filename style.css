@@ -488,7 +488,39 @@ body {
 .girando {
     animation: girarSuave 20s linear infinite;
 }
+/* ===== YOUTUBE EMBED ESTILOS ===== */
+.youtube-embed {
+    width: 100%;
+    border-radius: 12px;
+    overflow: hidden;
+    margin-top: 10px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+}
 
+.youtube-embed iframe {
+    width: 100%;
+    height: 180px;
+    border: none;
+    border-radius: 12px;
+}
+
+/* Ajustar responsive de YouTube */
+@media (max-width: 768px) {
+    .youtube-embed iframe {
+        height: 150px;
+    }
+}
+
+@media (max-width: 480px) {
+    .youtube-embed iframe {
+        height: 120px;
+    }
+}
+
+/* Quitar los estilos de audio-player anteriores */
+.audio-player {
+    display: none;
+}
 /* RESPONSIVE */
 @media (max-width: 768px) {
     #texto {
@@ -536,3 +568,4 @@ body {
         line-height: 60px;
     }
     }
+
