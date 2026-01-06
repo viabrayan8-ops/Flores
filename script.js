@@ -210,3 +210,57 @@ window.debug = {
         mostrarTexto();
     }
 };
+// ===== FONDO ANIMADO SNOOPY Y GATITOS =====
+function crearFondoAnimado() {
+    const fondo = document.getElementById('fondo-animado');
+    if (!fondo) return;
+    
+    // Crear 15 elementos flotantes (puedes ajustar)
+    for (let i = 0; i < 15; i++) {
+        setTimeout(() => {
+            const esSnoopy = Math.random() > 0.5;
+            const elemento = document.createElement('div');
+            
+            elemento.className = esSnoopy ? 'snoopy-flotante' : 'gatito-flotante';
+            
+            // Tamaño aleatorio (más pequeño o más grande)
+            const tamaño = 50 + Math.random() * 60;
+            elemento.style.width = `${tamaño}px`;
+            elemento.style.height = `${tamaño}px`;
+            
+            // Posición horizontal aleatoria
+            elemento.style.left = `${Math.random() * 100}vw`;
+            
+            // Velocidad aleatoria
+            const velocidades = ['flotar-lento', 'flotar-medio', 'flotar-rapido'];
+            elemento.classList.add(velocidades[Math.floor(Math.random() * velocidades.length)]);
+            
+            // Retraso aleatorio para que no todos empiecen juntos
+            elemento.style.animationDelay = `${Math.random() * 20}s`;
+            
+            // Opacidad aleatoria
+            elemento.style.opacity = `${0.4 + Math.random() * 0.4}`;
+            
+            // Girar aleatoriamente
+            if (Math.random() > 0.5) {
+                elemento.style.animation += ', girarSuave 20s linear infinite';
+            }
+            
+            fondo.appendChild(elemento);
+        }, i * 300); // Espaciar la creación
+    }
+}
+
+// Agregar animación de giro suave
+const style = document.createElement('style');
+style.textContent = `
+    @keyframes girarSuave {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+    }
+`;
+document.head.appendChild(style);
+
+// Llamar esta función cuando se muestre la carta
+// En la función mostrarCarta(), agregar:
+// crearFondoAnimado();
