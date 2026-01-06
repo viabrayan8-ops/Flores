@@ -720,7 +720,19 @@ function compartirViaje() {
     const mensaje = "¡Mira el viaje especial que me hicieron! ✨💖";
     const url = window.location.href;
     
-    if (navigator.share) {
+     if (navigator.share) {
         navigator.share({
-            title: 'N
+            title: 'Nuestro Viaje Espacial',
+            text: mensaje,
+            url: url
+        });
+    } else {
+        // Copiar al portapapeles
+        navigator.clipboard.writeText(`${mensaje}\n${url}`)
+            .then(() => {
+                alert('¡Link copiado al portapapeles! 📋\nPégalo donde quieras compartirlo.');
+            });
+    }
+}
+
 
