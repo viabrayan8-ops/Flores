@@ -113,6 +113,61 @@ function activarFlash() {
     requestAnimationFrame(animar);
 }
 
+// ===== FONDO ANIMADO SNOOPY Y GATITOS =====
+function crearFondoAnimado() {
+    const fondo = document.getElementById('fondo-animado');
+    if (!fondo) return;
+    
+    // Limpiar fondo por si hay elementos previos
+    fondo.innerHTML = '';
+    
+    // Crear 15 elementos flotantes (puedes ajustar)
+    for (let i = 0; i < 15; i++) {
+        setTimeout(() => {
+            const esSnoopy = Math.random() > 0.5;
+            const elemento = document.createElement('div');
+            
+            // Usar emojis como fallback si no hay imágenes
+            elemento.className = esSnoopy ? 'snoopy-flotante' : 'gatito-flotante';
+            
+            // Tamaño aleatorio
+            const tamaño = 50 + Math.random() * 60;
+            elemento.style.width = `${tamaño}px`;
+            elemento.style.height = `${tamaño}px`;
+            
+            // Posición horizontal aleatoria
+            elemento.style.left = `${Math.random() * 100}vw`;
+            
+            // Velocidad aleatoria
+            const velocidades = ['flotar-lento', 'flotar-medio', 'flotar-rapido'];
+            const velocidad = velocidades[Math.floor(Math.random() * velocidades.length)];
+            elemento.classList.add(velocidad);
+            
+            // Retraso aleatorio
+            elemento.style.animationDelay = `${Math.random() * 20}s`;
+            
+            // Opacidad aleatoria
+            elemento.style.opacity = `${0.4 + Math.random() * 0.4}`;
+            
+            // Girar aleatoriamente
+            if (Math.random() > 0.5) {
+                elemento.classList.add('girando');
+            }
+            
+            // Si tienes imágenes con esos nombres, descomenta esto:
+            // if (esSnoopy) {
+            //     elemento.style.backgroundImage = "url('snoopy.png')";
+            //     elemento.innerHTML = ''; // Quita el emoji
+            // } else {
+            //     elemento.style.backgroundImage = "url('gatito.png')";
+            //     elemento.innerHTML = '';
+            // }
+            
+            fondo.appendChild(elemento);
+        }, i * 300);
+    }
+}
+
 // ===== MOSTRAR CARTA =====
 function mostrarCarta() {
     document.querySelector('.container').style.display = 'none';
@@ -121,7 +176,7 @@ function mostrarCarta() {
     
     setTimeout(() => {
         cartaContainer.classList.remove('hidden');
-        crearFondoAnimado(); // ← AGREGAR ESTA LÍNEA
+        crearFondoAnimado();
         iniciarCarta();
     }, 500);
 }
@@ -136,13 +191,18 @@ function iniciarCarta() {
             sobreExterior.style.display = 'none';
             contenidoInterior.classList.remove('hidden');
             efectoEscrituraCarta();
+            // Mostrar el botón después de abrir el sobre
+            if (btnFinal) {
+                btnFinal.style.display = 'flex';
+            }
         }, 1500);
     });
     
-    // Botón final
+    // Botón final - inicialmente oculto
     if (btnFinal) {
+        btnFinal.style.display = 'none'; // Oculto hasta abrir el sobre
         btnFinal.addEventListener('click', function() {
-            alert('💖 Este momento queda guardado para siempre en nuestro corazón.\n\n¡Gracias por estos 4 meses increíbles! 💫');
+            alert('✨ Este momento queda guardado para siempre.\n\n¡Gracias por estos 4 meses increíbles! 🤍');
         });
     }
 }
@@ -192,8 +252,10 @@ window.debug = {
         document.querySelector('.music-controls').style.display = 'none';
         flashOverlay.style.display = 'none';
         cartaContainer.classList.remove('hidden');
+        crearFondoAnimado();
         sobreExterior.style.display = 'none';
         contenidoInterior.classList.remove('hidden');
+        if (btnFinal) btnFinal.style.display = 'flex';
     },
     reiniciar: function() {
         index = 0;
@@ -208,61 +270,8 @@ window.debug = {
         sobreExterior.style.display = 'block';
         sobreExterior.classList.remove('abriendo');
         contenidoInterior.classList.add('hidden');
+        if (btnFinal) btnFinal.style.display = 'none';
+        document.getElementById('fondo-animado').innerHTML = '';
         mostrarTexto();
     }
 };
-// ===== FONDO ANIMADO SNOOPY Y GATITOS =====
-function crearFondoAnimado() {
-    const fondo = document.getElementById('fondo-animado');
-    if (!fondo) return;
-    
-    // Crear 15 elementos flotantes (puedes ajustar)
-    for (let i = 0; i < 15; i++) {
-        setTimeout(() => {
-            const esSnoopy = Math.random() > 0.5;
-            const elemento = document.createElement('div');
-            
-            elemento.className = esSnoopy ? 'snoopy-flotante' : 'gatito-flotante';
-            
-            // Tamaño aleatorio (más pequeño o más grande)
-            const tamaño = 50 + Math.random() * 60;
-            elemento.style.width = `${tamaño}px`;
-            elemento.style.height = `${tamaño}px`;
-            
-            // Posición horizontal aleatoria
-            elemento.style.left = `${Math.random() * 100}vw`;
-            
-            // Velocidad aleatoria
-            const velocidades = ['flotar-lento', 'flotar-medio', 'flotar-rapido'];
-            elemento.classList.add(velocidades[Math.floor(Math.random() * velocidades.length)]);
-            
-            // Retraso aleatorio para que no todos empiecen juntos
-            elemento.style.animationDelay = `${Math.random() * 20}s`;
-            
-            // Opacidad aleatoria
-            elemento.style.opacity = `${0.4 + Math.random() * 0.4}`;
-            
-            // Girar aleatoriamente
-            if (Math.random() > 0.5) {
-                elemento.style.animation += ', girarSuave 20s linear infinite';
-            }
-            
-            fondo.appendChild(elemento);
-        }, i * 300); // Espaciar la creación
-    }
-}
-
-// Agregar animación de giro suave
-const style = document.createElement('style');
-style.textContent = `
-    @keyframes girarSuave {
-        from { transform: rotate(0deg); }
-        to { transform: rotate(360deg); }
-    }
-`;
-document.head.appendChild(style);
-
-// Llamar esta función cuando se muestre la carta
-// En la función mostrarCarta(), agregar:
-// crearFondoAnimado();
-
