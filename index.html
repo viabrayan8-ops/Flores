@@ -39,8 +39,8 @@
             <div class="sobre-frontal">
                 <div class="sello">💌</div>
                 <div class="texto-portada">
-                    <h1>Para Ti, Mi Amor</h1>
-                    <p>Este regalo viene desde Perú directo a tu corazón en Colombia</p>
+                    <h1>Para Ti, Mochi ^^</h1>
+                    <p>Este regalo viene desde Perú directo aen Colombia</p>
                     <p class="instruccion">Toca para abrir</p>
                     <div class="corazon-latiente">💖</div>
                 </div>
@@ -62,13 +62,13 @@
                         <li>El amor que siempre soñé y que ahora es mi realidad</li>
                     </ul>
                     <div class="premio-especial">
-                        <h4>PREMIO AL NIÑO MÁS BONITO</h4>
+                        <h4>PREMIO PARA MI PERSONA MAS ESPECIAL</h4>
                         <p class="categoria">"Persona que llena mi vida de sonrisas"</p>
                     </div>
                 </div>
                 <div class="firma">
-                    <p>Con todo mi amor,</p>
-                    <div class="firma-nombre">Tu Novia 💖</div>
+                    <p>Con todo mi cariño </p>
+                    <div class="firma-nombre">Takyan (⁠≧⁠▽⁠≦⁠)</div>
                 </div>
             </div>
             
@@ -88,9 +88,88 @@
             <button id="btn-final" class="btn-magico">
                 <i class="fas fa-heart"></i> Guardar este momento
             </button>
+            <!-- ===== VIAJE ESPACIAL ===== -->
+<div id="viaje-espacial" class="hidden">
+    <!-- Pantalla de carga -->
+    <div class="pantalla-carga">
+        <div class="loader">
+            <div class="cohete">🚀</div>
+            <div class="humo"></div>
+        </div>
+        <h2>Preparando viaje espacial...</h2>
+        <p class="mensaje-carga">Cargando recuerdos especiales</p>
+    </div>
+    
+    <!-- Controles -->
+    <div class="controles-viaje">
+        <div class="instrucciones-movil">
+            <i class="fas fa-hand-pointer"></i>
+            <span>Desliza para moverte</span>
+        </div>
+        <div class="contador">
+            <span id="contador-fotos">1/5</span>
+        </div>
+        <button class="btn-salir" onclick="finalizarViaje()">
+            <i class="fas fa-home"></i>
+        </button>
+    </div>
+    
+    <!-- Canvas para el espacio 3D -->
+    <canvas id="espacio3d"></canvas>
+    
+    <!-- Contenedor de objetos 3D (fotos y textos) -->
+    <div id="contenedor-3d"></div>
+    
+    <!-- Navegación -->
+    <div class="navegacion">
+        <button class="btn-nav" onclick="moverCamara('izquierda')">
+            <i class="fas fa-arrow-left"></i>
+        </button>
+        <button class="btn-nav" onclick="moverCamara('derecha')">
+            <i class="fas fa-arrow-right"></i>
+        </button>
+        <button class="btn-nav" onclick="moverCamara('arriba')">
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        <button class="btn-nav" onclick="moverCamara('abajo')">
+            <i class="fas fa-arrow-down"></i>
+        </button>
+    </div>
+    
+    <!-- Mensajes flotantes -->
+    <div class="mensajes-viaje">
+        <div class="mensaje" id="mensaje-actual">
+            ¡Bienvenida al viaje de nuestros recuerdos! 🌌
+        </div>
+    </div>
+</div>
+
+<!-- ===== PANTALLA FINAL ===== -->
+<div id="final-viaje" class="hidden">
+    <div class="contenido-final">
+        <h2>✨ Nuestro Viaje Continúa ✨</h2>
+        <p class="mensaje-final">
+            Este viaje por nuestros momentos especiales es solo el comienzo.<br>
+            Cada día contigo es una nueva aventura.<br>
+            Gracias por estos 4 meses increíbles.<br>
+            ¡Que vengan muchos más! 💖
+        </p>
+        <div class="firma-final">
+            <p>Con todo mi amor,</p>
+            <p class="nombre-final">Tu persona especial desde Perú 🇵🇪</p>
+        </div>
+        <button class="btn-repetir" onclick="repetirViaje()">
+            <i class="fas fa-redo"></i> Ver viaje de nuevo
+        </button>
+        <button class="btn-compartir" onclick="compartirViaje()">
+            <i class="fas fa-share-alt"></i> Compartir este momento
+        </button>
+    </div>
+</div>
         </div>
     </div>
 
     <script src="script.js"></script>
 </body>
                                                   </html>
+
