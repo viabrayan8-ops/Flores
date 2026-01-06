@@ -1,122 +1,96 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Girasoles de Ensueño</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para Ti ✨</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
 </head>
-<audio id="bg-music" autoplay loop muted>
-  <source src="fondo.mp3" type="audio/mpeg">
-</audio>
-
-<script>
-  window.addEventListener("click", () => {
-    const music = document.getElementById("bg-music");
-    if (music.muted) {
-      music.muted = false;
-      music.play();
-    }
-  });
-
-</script>
-
-<body class="not-loaded">
-<div class="night">
-  <div class="shooting-star"></div>
-</div>
-<div class="flowers">
-  <div class="flower flower--1">
-    <div class="flower__leafs flower__leafs--1">
-
-      <div class="flower__leaf"></div>
-      <div class="flower__leaf"></div>
-      <div class="flower__leaf"></div>
-      <div class="flower__leaf"></div>
-      <div class="flower__leaf"></div>
-      <div class="flower__leaf"></div>
-      <div class="flower__leaf"></div>
-      <div class="flower__leaf"></div>
-      <div class="flower__center"></div>
-
-      <div class="flower__light flower__light--1"></div>
-      <div class="flower__light flower__light--2"></div>
-      <div class="flower__light flower__light--3"></div>
-      <div class="flower__light flower__light--4"></div>
-      <div class="flower__light flower__light--5"></div>
-      <div class="flower__light flower__light--6"></div>
-      <div class="flower__light flower__light--7"></div>
-      <div class="flower__light flower__light--8"></div>
+<body>
+    <!-- Música -->
+    <audio id="musica" loop>
+        <source src="https://assets.mixkit.co/music/preview/mixkit-romantic-sunset-687.mp3" type="audio/mpeg">
+    </audio>
+    
+    <!-- Control música -->
+    <div class="music-controls">
+        <button id="music-toggle" class="music-btn">
+            <i class="fas fa-play"></i>
+        </button>
+        <span class="music-label">Música: On</span>
     </div>
-    <div class="flower__line">
-      <div class="flower__line__leaf flower__line__leaf--1"></div>
-      <div class="flower__line__leaf flower__line__leaf--2"></div>
-      <div class="flower__line__leaf flower__line__leaf--3"></div>
-      <div class="flower__line__leaf flower__line__leaf--4"></div>
-    </div>
-  </div>
 
-  <div class="flower flower--2">
-    <div class="flower__leafs flower__leafs--2">
-      <div class="flower__leaf"></div>
-      <div class="flower__leaf"></div>
-      <div class="flower__leaf"></div>
-      <div class="flower__leaf"></div>
-      <div class="flower__leaf"></div>
-      <div class="flower__leaf"></div>
-      <div class="flower__leaf"></div>
-      <div class="flower__leaf"></div>
-      <div class="flower__center"></div>
+    <!-- Textos iniciales -->
+    <div class="container">
+        <h1 id="texto">💖</h1>
+    </div>
 
-      <div class="flower__light flower__light--1"></div>
-      <div class="flower__light flower__light--2"></div>
-      <div class="flower__light flower__light--3"></div>
-      <div class="flower__light flower__light--4"></div>
-      <div class="flower__light flower__light--5"></div>
-      <div class="flower__light flower__light--6"></div>
-      <div class="flower__light flower__light--7"></div>
-      <div class="flower__light flower__light--8"></div>
-    </div>
-    <div class="flower__line">
-      <div class="flower__line__leaf flower__line__leaf--1"></div>
-      <div class="flower__line__leaf flower__line__leaf--2"></div>
-      <div class="flower__line__leaf flower__line__leaf--3"></div>
-      <div class="flower__line__leaf flower__line__leaf--4"></div>
-    </div>
-  </div>
+    <!-- Partículas -->
+    <div id="particles"></div>
 
-  <div class="flower flower--3">
-    <div class="flower__leafs flower__leafs--3">
-      <div class="flower__leaf"></div>
-      <div class="flower__leaf"></div>
-      <div class="flower__leaf"></div>
-      <div class="flower__leaf"></div>
-      <div class="flower__leaf"></div>
-      <div class="flower__leaf"></div>
-      <div class="flower__leaf"></div>
-      <div class="flower__leaf"></div>
-      <div class="flower__center"></div>
+    <!-- Flash -->
+    <div id="flash-overlay"></div>
 
-      <div class="flower__light flower__light--1"></div>
-      <div class="flower__light flower__light--2"></div>
-      <div class="flower__light flower__light--3"></div>
-      <div class="flower__light flower__light--4"></div>
-      <div class="flower__light flower__light--5"></div>
-      <div class="flower__light flower__light--6"></div>
-      <div class="flower__light flower__light--7"></div>
-      <div class="flower__light flower__light--8"></div>
+    <!-- Carta -->
+    <div id="carta-container" class="hidden">
+        <div class="sobre" id="sobre-exterior">
+            <div class="sobre-frontal">
+                <div class="sello">💌</div>
+                <div class="texto-portada">
+                    <h1>Para Ti, Mi Amor</h1>
+                    <p>Este regalo viene desde Perú directo a tu corazón en Colombia</p>
+                    <p class="instruccion">Toca para abrir</p>
+                    <div class="corazon-latiente">💖</div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="contenido-interior" class="hidden">
+            <div class="diploma">
+                <div class="diploma-header">
+                    <h2>DIPLOMA</h2>
+                    <h3>AL MEJOR NOVIO DEL MUNDO</h3>
+                </div>
+                <div class="diploma-body">
+                    <p>Por ser:</p>
+                    <ul class="lista-cualidades">
+                        <li>El dueño de mis pensamientos y de mi corazón</li>
+                        <li>La razón de mis sonrisas más sinceras</li>
+                        <li>Mi compañero en lo bueno y en lo difícil</li>
+                        <li>El amor que siempre soñé y que ahora es mi realidad</li>
+                    </ul>
+                    <div class="premio-especial">
+                        <h4>PREMIO AL NIÑO MÁS BONITO</h4>
+                        <p class="categoria">"Persona que llena mi vida de sonrisas"</p>
+                    </div>
+                </div>
+                <div class="firma">
+                    <p>Con todo mi amor,</p>
+                    <div class="firma-nombre">Tu Novia 💖</div>
+                </div>
+            </div>
+            
+            <div class="carta-texto">
+                <div class="papel-carta">
+                    <p class="saludo">Mi amor,</p>
+                    <p>Hay gracias infinitas a la persona que llena mi vida de sonrisas. Aunque la distancia nos separa, no importa cuántos kilómetros estén entre nosotros, porque cada día me haces sentir que estás aquí, conmigo.</p>
+                    <p>Gracias por tus mensajes, por cada llamada, por tu paciencia y tu forma de amarme incluso cuando no es fácil. Eres mi alegría, mi motivación y la persona con la que sueño compartir todos mis días sin pantallas de por medio.</p>
+                    <p>Feliz Día, amor, vida mía. Esto es un pequeño detalle para recordarte que mi corazón late por ti, hoy y siempre.</p>
+                    <div class="despedida">
+                        <p>Con todo mi amor,</p>
+                        <p class="nombre-final">Tu chica 💫</p>
+                    </div>
+                </div>
+            </div>
+            
+            <button id="btn-final" class="btn-magico">
+                <i class="fas fa-heart"></i> Guardar este momento
+            </button>
+        </div>
     </div>
-    <div class="flower__line">
-      <div class="flower__line__leaf flower__line__leaf--1"></div>
-      <div class="flower__line__leaf flower__line__leaf--2"></div>
-      <div class="flower__line__leaf flower__line__leaf--3"></div>
-      <div class="flower__line__leaf flower__line__leaf--4"></div>
-    </div>
-  </div>
-</div>
-<div class="poem-card">
-  <p id="poem-text"></p>
-</div>
-<script src="script.js"></script>
+
+    <script src="script.js"></script>
 </body>
-</html>
+                                                  </html>
