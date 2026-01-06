@@ -27,6 +27,8 @@ const musica = document.getElementById("musica");
 const musicToggle = document.getElementById("music-toggle");
 const musicLabel = document.querySelector('.music-label');
 const btnFinal = document.getElementById('btn-final');
+const seccionMusica = document.getElementById('seccion-musica');
+const btnSiguienteFotos = document.getElementById('btn-siguiente-fotos');
 
 let index = 0;
 
@@ -154,15 +156,6 @@ function crearFondoAnimado() {
                 elemento.classList.add('girando');
             }
             
-            // Si tienes imágenes con esos nombres, descomenta esto:
-            // if (esSnoopy) {
-            //     elemento.style.backgroundImage = "url('snoopy.png')";
-            //     elemento.innerHTML = ''; // Quita el emoji
-            // } else {
-            //     elemento.style.backgroundImage = "url('gatito.png')";
-            //     elemento.innerHTML = '';
-            // }
-            
             fondo.appendChild(elemento);
         }, i * 300);
     }
@@ -202,9 +195,186 @@ function iniciarCarta() {
     if (btnFinal) {
         btnFinal.style.display = 'none'; // Oculto hasta abrir el sobre
         btnFinal.addEventListener('click', function() {
-            alert('✨ Este momento queda guardado para siempre.\n\n¡Gracias por estos 4 meses increíbles! 🤍');
+            // Ocultar carta con efecto
+            cartaContainer.style.opacity = '0';
+            cartaContainer.style.transform = 'translateY(-50px)';
+            cartaContainer.style.transition = 'all 0.8s ease';
+            
+            setTimeout(() => {
+                cartaContainer.classList.add('hidden');
+                cartaContainer.style.opacity = '1';
+                cartaContainer.style.transform = 'translateY(0)';
+                
+                // Mostrar sección de música
+                mostrarSeccionMusica();
+            }, 800);
         });
     }
+}
+
+// ===== MOSTRAR SECCIÓN MÚSICA =====
+function mostrarSeccionMusica() {
+    seccionMusica.classList.remove('hidden');
+    seccionMusica.classList.add('mostrando');
+    
+    // Animación de entrada para las tarjetas
+    const tarjetasCanciones = document.querySelectorAll('.cancion-card');
+    tarjetasCanciones.forEach((tarjeta, index) => {
+        tarjeta.style.transitionDelay = `${index * 0.2}s`;
+        setTimeout(() => {
+            tarjeta.classList.add('mostrando');
+        }, 100);
+    });
+    
+    // Configurar botón siguiente
+    if (btnSiguienteFotos) {
+        btnSiguienteFotos.addEventListener('click', function() {
+            // Ocultar sección música con efecto
+            seccionMusica.style.opacity = '0';
+            seccionMusica.style.transform = 'translateY(50px)';
+            seccionMusica.style.transition = 'all 0.8s ease';
+            
+            setTimeout(() => {
+                seccionMusica.classList.add('hidden');
+                seccionMusica.classList.remove('mostrando');
+                seccionMusica.style.opacity = '1';
+                seccionMusica.style.transform = 'translateY(0)';
+                
+                // Mostrar siguiente sección (fotos)
+                mostrarSeccionFotos();
+            }, 800);
+        });
+    }
+    
+    // Efectos hover en tarjetas
+    const tarjetas = document.querySelectorAll('.cancion-card');
+    tarjetas.forEach(tarjeta => {
+        tarjeta.addEventListener('mouseenter', function() {
+            this.style.boxShadow = '0 20px 40px rgba(255, 107, 157, 0.25)';
+            this.style.transform = 'translateY(-8px)';
+        });
+        
+        tarjeta.addEventListener('mouseleave', function() {
+            this.style.boxShadow = '0 10px 20px rgba(0, 0, 0, 0.2)';
+            this.style.transform = 'translateY(0)';
+        });
+    });
+}
+
+// ===== MOSTRAR SECCIÓN FOTOS (TEMPORAL) =====
+function mostrarSeccionFotos() {
+    // Crear sección temporal
+    const seccionFotos = document.createElement('div');
+    seccionFotos.id = 'seccion-fotos-temporal';
+    seccionFotos.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, #1a1a2e, #16213e);
+        z-index: 30000;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+        color: white;
+        text-align: center;
+        opacity: 0;
+        transform: translateY(30px);
+        transition: all 0.8s ease;
+    `;
+    
+    seccionFotos.innerHTML = `
+        <h2 style="font-family: 'Dancing Script', cursive; font-size: 3rem; color: #ff6b9d; margin-bottom: 20px;">
+            <i class="fas fa-gamepad"></i> Nuestras Aventuras en Juegos
+        </h2>
+        <p style="font-size: 1.2rem; margin-bottom: 30px; max-width: 600px;">
+            Pronto aquí estarán todas nuestras capturas épicas de Roblox y otros juegos 🎮
+        </p>
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; max-width: 500px; margin: 30px 0;">
+            <div style="background: rgba(255,107,157,0.2); padding: 20px; border-radius: 15px; transition: transform 0.3s;">
+                <i class="fas fa-robot" style="font-size: 2.5rem; margin-bottom: 10px;"></i>
+                <p>Roblox</p>
+            </div>
+            <div style="background: rgba(0,150,255,0.2); padding: 20px; border-radius: 15px; transition: transform 0.3s;">
+                <i class="fas fa-dragon" style="font-size: 2.5rem; margin-bottom: 10px;"></i>
+                <p>Otros Juegos</p>
+            </div>
+            <div style="background: rgba(255,200,0,0.2); padding: 20px; border-radius: 15px; transition: transform 0.3s;">
+                <i class="fas fa-camera" style="font-size: 2.5rem; margin-bottom: 10px;"></i>
+                <p>Momentos Épicos</p>
+            </div>
+        </div>
+        <button id="btn-volver-musica" style="
+            background: #ff6b9d;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 50px;
+            color: white;
+            font-size: 1.1rem;
+            cursor: pointer;
+            margin-top: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: transform 0.3s;
+        ">
+            <i class="fas fa-arrow-left"></i> Volver a la Música
+        </button>
+        <button id="btn-audio-final" style="
+            background: linear-gradient(135deg, #8a2387, #e94057);
+            border: none;
+            padding: 15px 30px;
+            border-radius: 50px;
+            color: white;
+            font-size: 1.1rem;
+            cursor: pointer;
+            margin-top: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: transform 0.3s;
+        ">
+            <i class="fas fa-microphone"></i> Escuchar Mensaje Final
+        </button>
+    `;
+    
+    document.body.appendChild(seccionFotos);
+    
+    // Animación de entrada
+    setTimeout(() => {
+        seccionFotos.style.opacity = '1';
+        seccionFotos.style.transform = 'translateY(0)';
+    }, 50);
+    
+    // Efectos hover en los cuadros
+    const cuadros = seccionFotos.querySelectorAll('div > div');
+    cuadros.forEach(cuadro => {
+        cuadro.addEventListener('mouseenter', () => {
+            cuadro.style.transform = 'scale(1.05)';
+        });
+        cuadro.addEventListener('mouseleave', () => {
+            cuadro.style.transform = 'scale(1)';
+        });
+    });
+    
+    // Botón para volver a música
+    document.getElementById('btn-volver-musica').addEventListener('click', function() {
+        seccionFotos.style.opacity = '0';
+        seccionFotos.style.transform = 'translateY(50px)';
+        
+        setTimeout(() => {
+            document.body.removeChild(seccionFotos);
+            mostrarSeccionMusica();
+        }, 800);
+    });
+    
+    // Botón para ir al audio final
+    document.getElementById('btn-audio-final').addEventListener('click', function() {
+        alert("🎤 Próximo: Tu mensaje de voz personalizado!\n\n(Aquí irá tu audio grabado)");
+    });
 }
 
 // ===== EFECTO ESCRITURA CARTA =====
@@ -257,6 +427,10 @@ window.debug = {
         contenidoInterior.classList.remove('hidden');
         if (btnFinal) btnFinal.style.display = 'flex';
     },
+    saltarAMusica: function() {
+        cartaContainer.classList.add('hidden');
+        mostrarSeccionMusica();
+    },
     reiniciar: function() {
         index = 0;
         document.querySelector('.container').style.display = 'block';
@@ -270,135 +444,15 @@ window.debug = {
         sobreExterior.style.display = 'block';
         sobreExterior.classList.remove('abriendo');
         contenidoInterior.classList.add('hidden');
+        seccionMusica.classList.add('hidden');
+        seccionMusica.classList.remove('mostrando');
+        
+        // Remover sección temporal si existe
+        const seccionTemp = document.getElementById('seccion-fotos-temporal');
+        if (seccionTemp) document.body.removeChild(seccionTemp);
+        
         if (btnFinal) btnFinal.style.display = 'none';
         document.getElementById('fondo-animado').innerHTML = '';
         mostrarTexto();
     }
-    // ===== CONTROL SECCIÓN MÚSICA =====
-function iniciarSeccionMusica() {
-    const btnSiguienteFotos = document.getElementById('btn-siguiente-fotos');
-    
-    if (btnSiguienteFotos) {
-        btnSiguienteFotos.addEventListener('click', function() {
-            // Ocultar sección música con efecto
-            const seccionMusica = document.getElementById('seccion-musica');
-            seccionMusica.style.opacity = '0';
-            seccionMusica.style.transform = 'translateY(50px)';
-            seccionMusica.style.transition = 'all 0.8s ease';
-            
-            setTimeout(() => {
-                seccionMusica.classList.add('hidden');
-                
-                // Aquí irá la sección de fotos de juegos
-                // mostrarSeccionFotos();
-                console.log("Ir a sección de fotos...");
-                
-                // TEMPORAL: Mostrar alerta
-                alert("🎮 Próximamente: Nuestras aventuras en juegos! (Siguiente sección)");
-                
-                // O puedes crear una sección temporal:
-                crearSeccionTemporalFotos();
-            }, 800);
-        });
-    }
-    
-    // Efecto especial al pasar mouse sobre tarjetas
-    const tarjetas = document.querySelectorAll('.cancion-card');
-    tarjetas.forEach((tarjeta, index) => {
-        // Retraso escalonado para animación de entrada
-        setTimeout(() => {
-            tarjeta.style.opacity = '1';
-            tarjeta.style.transform = 'translateY(0)';
-        }, index * 200);
-        
-        tarjeta.addEventListener('mouseenter', function() {
-            this.style.boxShadow = '0 20px 40px rgba(255, 107, 157, 0.25)';
-            this.style.transform = 'translateY(-8px)';
-        });
-        
-        tarjeta.addEventListener('mouseleave', function() {
-            this.style.boxShadow = '0 10px 20px rgba(0, 0, 0, 0.2)';
-            this.style.transform = 'translateY(0)';
-        });
-    });
-    
-    // Animación de entrada para toda la sección
-    setTimeout(() => {
-        const seccionMusica = document.getElementById('seccion-musica');
-        if (seccionMusica) {
-            seccionMusica.style.opacity = '1';
-            seccionMusica.style.transform = 'translateY(0)';
-        }
-    }, 100);
-}
-
-// ===== SECCIÓN TEMPORAL DE FOTOS (para probar) =====
-function crearSeccionTemporalFotos() {
-    // Crear sección temporal
-    const seccionFotos = document.createElement('div');
-    seccionFotos.id = 'seccion-temporal-fotos';
-    seccionFotos.style.cssText = `
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(135deg, #1a1a2e, #16213e);
-        z-index: 30000;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        padding: 20px;
-        color: white;
-        text-align: center;
-    `;
-    
-    seccionFotos.innerHTML = `
-        <h2 style="font-family: 'Dancing Script', cursive; font-size: 3rem; color: #ff6b9d; margin-bottom: 20px;">
-            <i class="fas fa-gamepad"></i> Nuestras Aventuras en Juegos
-        </h2>
-        <p style="font-size: 1.2rem; margin-bottom: 30px; max-width: 600px;">
-            Pronto aquí estarán todas nuestras capturas épicas de Roblox y otros juegos 🎮
-        </p>
-        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; max-width: 500px; margin: 30px 0;">
-            <div style="background: rgba(255,107,157,0.2); padding: 20px; border-radius: 15px;">
-                <i class="fas fa-robot" style="font-size: 2.5rem; margin-bottom: 10px;"></i>
-                <p>Roblox</p>
-            </div>
-            <div style="background: rgba(0,150,255,0.2); padding: 20px; border-radius: 15px;">
-                <i class="fas fa-dragon" style="font-size: 2.5rem; margin-bottom: 10px;"></i>
-                <p>Otros Juegos</p>
-            </div>
-            <div style="background: rgba(255,200,0,0.2); padding: 20px; border-radius: 15px;">
-                <i class="fas fa-camera" style="font-size: 2.5rem; margin-bottom: 10px;"></i>
-                <p>Momentos Épicos</p>
-            </div>
-        </div>
-        <button id="btn-volver-musica" style="
-            background: #ff6b9d;
-            border: none;
-            padding: 15px 30px;
-            border-radius: 50px;
-            color: white;
-            font-size: 1.1rem;
-            cursor: pointer;
-            margin-top: 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        ">
-            <i class="fas fa-arrow-left"></i> Volver a la Música
-        </button>
-    `;
-    
-    document.body.appendChild(seccionFotos);
-    
-    // Botón para volver
-    document.getElementById('btn-volver-musica').addEventListener('click', function() {
-        document.body.removeChild(seccionFotos);
-        document.getElementById('seccion-musica').classList.remove('hidden');
-    });
-}
 };
-
