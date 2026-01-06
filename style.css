@@ -129,18 +129,22 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background: #0a0a0a;
+    /* FONDO PASTEL CORREGIDO */
+    background: linear-gradient(135deg, #ffe6f0 0%, #fff0f7 50%, #e6f0ff 100%);
     z-index: 10000;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     padding: 20px;
+    overflow: auto;
 }
 
 /* SOBRE */
 .sobre {
     perspective: 1500px;
     cursor: pointer;
+    z-index: 10001;
 }
 
 .sobre-frontal {
@@ -235,6 +239,8 @@ body {
     max-width: 1000px;
     text-align: center;
     animation: aparecerContenido 1s ease-out forwards;
+    z-index: 10001;
+    position: relative;
 }
 
 @keyframes aparecerContenido {
@@ -380,27 +386,107 @@ body {
     color: #8b0000;
 }
 
-/* BOTÓN */
+/* BOTÓN CORREGIDO - AHORA A LA DERECHA */
 .btn-magico {
     background: #ff6b9d;
     border: none;
-    padding: 20px 50px;
-    font-size: 1.5rem;
+    padding: 15px 30px;
+    font-size: 1.2rem;
     color: white;
     border-radius: 50px;
     cursor: pointer;
-    margin-top: 40px;
     transition: all 0.3s;
     box-shadow: 0 10px 30px rgba(255, 107, 157, 0.4);
     display: inline-flex;
     align-items: center;
-    gap: 15px;
+    gap: 10px;
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    z-index: 10002;
 }
 
 .btn-magico:hover {
     background: #ff8fab;
     transform: scale(1.05);
     box-shadow: 0 15px 40px rgba(255, 107, 157, 0.6);
+}
+
+/* ===== FONDO ANIMADO ===== */
+#fondo-animado {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+    overflow: hidden;
+}
+
+.snoopy-flotante, .gatito-flotante {
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    opacity: 0.7;
+    filter: drop-shadow(0 0 8px rgba(255, 107, 157, 0.6));
+    z-index: 1;
+    font-size: 60px;
+    text-align: center;
+    line-height: 80px;
+}
+
+/* Si no hay imágenes, mostramos emojis */
+.snoopy-flotante::after {
+    content: '🐶';
+}
+
+.gatito-flotante::after {
+    content: '🐱';
+}
+
+/* Efecto de rotación suave */
+@keyframes flotar {
+    0% {
+        transform: translateY(100vh) rotate(0deg);
+        opacity: 0;
+    }
+    10% {
+        opacity: 0.8;
+    }
+    90% {
+        opacity: 0.8;
+    }
+    100% {
+        transform: translateY(-100px) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+/* Animación de giro suave */
+@keyframes girarSuave {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* Diferentes velocidades */
+.flotar-lento {
+    animation: flotar 25s linear infinite;
+}
+
+.flotar-medio {
+    animation: flotar 20s linear infinite;
+}
+
+.flotar-rapido {
+    animation: flotar 15s linear infinite;
+}
+
+.girando {
+    animation: girarSuave 20s linear infinite;
 }
 
 /* RESPONSIVE */
@@ -437,70 +523,16 @@ body {
     }
     
     .btn-magico {
-        padding: 15px 30px;
-        font-size: 1.2rem;
+        padding: 12px 25px;
+        font-size: 1rem;
+        bottom: 20px;
+        right: 20px;
+    }
+    
+    .snoopy-flotante, .gatito-flotante {
+        width: 60px;
+        height: 60px;
+        font-size: 45px;
+        line-height: 60px;
     }
     }
-/* ===== FONDO ANIMADO ===== */
-#fondo-animado {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    z-index: -1;
-    overflow: hidden;
-}
-
-.snoopy-flotante, .gatito-flotante {
-    position: absolute;
-    width: 80px;
-    height: 80px;
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
-    opacity: 0.7;
-    filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.5));
-    z-index: -1;
-}
-
-.snoopy-flotante {
-    background-image: url('snoopy.png'); /* Cambia por tu imagen */
-}
-
-.gatito-flotante {
-    background-image: url('gatito.png'); /* Cambia por tu imagen */
-}
-
-/* Efecto de rotación suave */
-@keyframes flotar {
-    0% {
-        transform: translateY(100vh) rotate(0deg);
-        opacity: 0;
-    }
-    10% {
-        opacity: 0.8;
-    }
-    90% {
-        opacity: 0.8;
-    }
-    100% {
-        transform: translateY(-100px) rotate(360deg);
-        opacity: 0;
-    }
-}
-
-/* Diferentes velocidades */
-.flotar-lento {
-    animation: flotar 25s linear infinite;
-}
-
-.flotar-medio {
-    animation: flotar 20s linear infinite;
-}
-
-.flotar-rapido {
-    animation: flotar 15s linear infinite;
-}
-
