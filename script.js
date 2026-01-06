@@ -121,6 +121,7 @@ function mostrarCarta() {
     
     setTimeout(() => {
         cartaContainer.classList.remove('hidden');
+        crearFondoAnimado(); // ← AGREGAR ESTA LÍNEA
         iniciarCarta();
     }, 500);
 }
@@ -264,3 +265,4 @@ document.head.appendChild(style);
 // Llamar esta función cuando se muestre la carta
 // En la función mostrarCarta(), agregar:
 // crearFondoAnimado();
+
