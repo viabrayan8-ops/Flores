@@ -441,3 +441,413 @@ body {
         font-size: 1.2rem;
     }
     }
+/* ===== VIAJE ESPACIAL ===== */
+#viaje-espacial {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #000;
+    z-index: 20000;
+    overflow: hidden;
+}
+
+/* Pantalla de carga */
+.pantalla-carga {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #000;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 20001;
+}
+
+.loader {
+    position: relative;
+    margin-bottom: 30px;
+}
+
+.cohete {
+    font-size: 80px;
+    animation: despegue 2s infinite alternate;
+}
+
+@keyframes despegue {
+    0% { transform: translateY(0) scale(1); }
+    100% { transform: translateY(-20px) scale(1.1); }
+}
+
+.humo {
+    position: absolute;
+    bottom: -40px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40px;
+    height: 60px;
+    background: linear-gradient(to top, rgba(255,255,255,0.8), transparent);
+    border-radius: 50%;
+    animation: humo 1.5s infinite;
+}
+
+@keyframes humo {
+    0% { opacity: 0.5; transform: translateX(-50%) scale(0.8); }
+    100% { opacity: 0; transform: translateX(-50%) scale(1.5); }
+}
+
+.pantalla-carga h2 {
+    font-size: 2rem;
+    color: #4ecdc4;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.mensaje-carga {
+    color: #aaa;
+    font-size: 1.1rem;
+}
+
+/* Controles */
+.controles-viaje {
+    position: absolute;
+    top: 20px;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    z-index: 20002;
+    pointer-events: none;
+}
+
+.instrucciones-movil {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(0, 0, 0, 0.7);
+    padding: 10px 15px;
+    border-radius: 20px;
+    color: white;
+    font-size: 0.9rem;
+    pointer-events: auto;
+}
+
+.instrucciones-movil i {
+    color: #4ecdc4;
+    font-size: 1.2rem;
+}
+
+.contador {
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-size: 1rem;
+    pointer-events: auto;
+}
+
+.btn-salir {
+    background: rgba(255, 107, 157, 0.8);
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s;
+    pointer-events: auto;
+}
+
+.btn-salir:hover {
+    background: #ff6b9d;
+    transform: scale(1.1);
+}
+
+/* Canvas 3D */
+#espacio3d {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+    z-index: 1;
+}
+
+/* Contenedor 3D */
+#contenedor-3d {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    perspective: 1000px;
+    z-index: 2;
+}
+
+.objeto-espacial {
+    position: absolute;
+    transition: transform 0.5s ease-out;
+    cursor: pointer;
+    transform-style: preserve-3d;
+}
+
+.foto-espacio {
+    width: 200px;
+    height: 200px;
+    border-radius: 10px;
+    object-fit: cover;
+    border: 3px solid #ff6b9d;
+    box-shadow: 
+        0 0 30px rgba(255, 107, 157, 0.6),
+        0 0 60px rgba(78, 205, 196, 0.4);
+    transition: all 0.3s;
+}
+
+.foto-espacio:hover {
+    transform: scale(1.1) rotateY(10deg);
+    box-shadow: 
+        0 0 50px rgba(255, 107, 157, 0.8),
+        0 0 100px rgba(78, 205, 196, 0.6);
+}
+
+.texto-espacio {
+    color: white;
+    font-size: 1.5rem;
+    text-align: center;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+    background: rgba(0, 0, 0, 0.7);
+    padding: 15px 25px;
+    border-radius: 15px;
+    border: 2px solid #4ecdc4;
+    max-width: 300px;
+    backdrop-filter: blur(5px);
+}
+
+/* Estrellas rápidas (efecto warp) */
+.estrella-rapida {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: white;
+    border-radius: 50%;
+    animation: estrellaVeloz linear infinite;
+}
+
+@keyframes estrellaVeloz {
+    0% {
+        transform: translateZ(-1000px) translateY(100vh) translateX(-100vw);
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+    }
+    90% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateZ(1000px) translateY(-100vh) translateX(100vw);
+        opacity: 0;
+    }
+}
+
+/* Navegación */
+.navegacion {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    gap: 10px;
+    z-index: 20003;
+    pointer-events: none;
+}
+
+.btn-nav {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    transition: all 0.3s;
+    pointer-events: auto;
+    backdrop-filter: blur(10px);
+}
+
+.btn-nav:hover {
+    background: rgba(255, 107, 157, 0.8);
+    transform: scale(1.1);
+}
+
+.btn-nav:nth-child(1) { grid-column: 1; grid-row: 2; } /* Izquierda */
+.btn-nav:nth-child(2) { grid-column: 3; grid-row: 2; } /* Derecha */
+.btn-nav:nth-child(3) { grid-column: 2; grid-row: 1; } /* Arriba */
+.btn-nav:nth-child(4) { grid-column: 2; grid-row: 3; } /* Abajo */
+
+/* Mensajes flotantes */
+.mensajes-viaje {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 20004;
+    pointer-events: none;
+}
+
+.mensaje {
+    background: linear-gradient(45deg, rgba(255, 107, 157, 0.9), rgba(78, 205, 196, 0.9));
+    color: white;
+    padding: 20px 30px;
+    border-radius: 15px;
+    text-align: center;
+    font-size: 1.3rem;
+    max-width: 400px;
+    animation: flotarMensaje 4s ease-in-out infinite;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+@keyframes flotarMensaje {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+/* ===== PANTALLA FINAL ===== */
+#final-viaje {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #000;
+    z-index: 30000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.contenido-final {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(20px);
+    padding: 50px;
+    border-radius: 20px;
+    text-align: center;
+    max-width: 700px;
+    border: 2px solid rgba(255, 107, 157, 0.3);
+    box-shadow: 
+        0 0 50px rgba(255, 107, 157, 0.3),
+        0 0 100px rgba(78, 205, 196, 0.2);
+    animation: aparecerFinal 1.5s ease-out;
+}
+
+@keyframes aparecerFinal {
+    from { opacity: 0; transform: scale(0.8); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+.contenido-final h2 {
+    font-size: 3rem;
+    color: #ff6b9d;
+    margin-bottom: 30px;
+    text-shadow: 0 0 20px rgba(255, 107, 157, 0.5);
+}
+
+.mensaje-final {
+    font-size: 1.4rem;
+    line-height: 1.8;
+    color: white;
+    margin-bottom: 40px;
+}
+
+.firma-final {
+    margin: 40px 0;
+    color: #aaa;
+    font-style: italic;
+}
+
+.nombre-final {
+    font-family: 'Dancing Script', cursive;
+    font-size: 2.5rem;
+    color: #4ecdc4;
+    margin-top: 10px;
+}
+
+.btn-repetir, .btn-compartir {
+    background: #ff6b9d;
+    border: none;
+    padding: 15px 30px;
+    font-size: 1.2rem;
+    color: white;
+    border-radius: 50px;
+    cursor: pointer;
+    margin: 10px;
+    transition: all 0.3s;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.btn-repetir:hover {
+    background: #ff8fab;
+    transform: scale(1.05);
+}
+
+.btn-compartir {
+    background: #4ecdc4;
+}
+
+.btn-compartir:hover {
+    background: #6bd4cc;
+    transform: scale(1.05);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .foto-espacio {
+        width: 150px;
+        height: 150px;
+    }
+    
+    .texto-espacio {
+        font-size: 1.2rem;
+        padding: 12px 20px;
+        max-width: 250px;
+    }
+    
+    .contenido-final {
+        padding: 30px;
+    }
+    
+    .contenido-final h2 {
+        font-size: 2.2rem;
+    }
+    
+    .mensaje-final {
+        font-size: 1.1rem;
+    }
+    
+    .btn-nav {
+        width: 45px;
+        height: 45px;
+        font-size: 1rem;
+    }
+                              }
