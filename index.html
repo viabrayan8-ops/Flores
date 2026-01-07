@@ -9,35 +9,30 @@
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
 <body>
-    <!-- Música -->
+    <!-- Audio SIMPLE -->
     <audio id="musica" loop>
         <source src="https://assets.mixkit.co/music/preview/mixkit-romantic-sunset-687.mp3" type="audio/mpeg">
     </audio>
     
-    <!-- Control música -->
+    <!-- Control -->
     <div class="music-controls">
         <button id="music-toggle" class="music-btn">
             <i class="fas fa-play"></i>
         </button>
-        <span class="music-label">Música: On</span>
+        <span class="music-label">Música</span>
     </div>
 
-    <!-- Textos iniciales -->
-    <div class="container">
-        <h1 id="texto">💖</h1>
+    <!-- INICIO -->
+    <div id="pantalla-inicio">
+        <div class="container">
+            <h1 id="texto">💖</h1>
+        </div>
+        <div id="particles"></div>
+        <div id="flash-overlay"></div>
     </div>
 
-    <!-- Partículas -->
-    <div id="particles"></div>
-
-    <!-- Flash -->
-    <div id="flash-overlay"></div>
-
-    <!-- Carta -->
-    <div id="carta-container" class="hidden">
-        <!-- Fondo animado -->
-        <div id="fondo-animado"></div>
-        
+    <!-- CARTA -->
+    <div id="carta-container" class="oculto">
         <div class="sobre" id="sobre-exterior">
             <div class="sobre-frontal">
                 <div class="sello">💌</div>
@@ -50,9 +45,8 @@
             </div>
         </div>
         
-        <div id="contenido-interior" class="hidden">
+        <div id="contenido-interior" class="oculto">
             <div class="diploma">
-                <!-- contenido del diploma -->
                 <div class="diploma-header">
                     <h2>DIPLOMA</h2>
                     <h3>A MI PERSONA ESPECIAL</h3>
@@ -89,106 +83,66 @@
                 </div>
             </div>
             
-            <!-- BOTÓN SIMPLE -->
             <button id="btn-ir-musica" class="btn-magico">
-                <i class="fas fa-music"></i> Escuchar Nuestra Playlist
+                <i class="fas fa-music"></i> Escuchar Playlist
             </button>
         </div>
     </div>
 
-    <!-- Sección Música (SOLO ESTA) -->
-    <div id="seccion-musica" class="hidden">
+    <!-- MÚSICA -->
+    <section id="seccion-musica" class="oculto">
         <div class="playlist-container">
-            <h2><i class="fas fa-music"></i> Nuestra Playlist Especial</h2>
-            <p class="subtitulo">Canciones que cuentan algo de nosotros</p>
+            <h2><i class="fas fa-music"></i> Playlist Especial</h2>
+            <p class="subtitulo">Canciones que nos representan</p>
             
             <!-- Canción 1 -->
             <div class="cancion-card">
-                <div class="album-cover" style="background: linear-gradient(135deg, #8a2387, #e94057, #f27121);">
-                    <span class="emoji-album">🎸✨</span>
-                </div>
                 <div class="cancion-info">
                     <h3>Sweet Child O' Mine</h3>
                     <p class="artista">Guns N' Roses</p>
                     <p class="significado">
-                        "Eres esa persona que hace brillar lo simple. Como la canción dice: 
-                        'Where do we go now?'... Pues hacia más momentos como estos 🤘"
+                        "Eres esa persona que hace brillar lo simple 🤘"
                     </p>
                     <div class="reproductor">
-                        <div class="youtube-embed">
-                            <iframe 
-                                src="https://www.youtube.com/embed/1w7OgIMMRc4?modestbranding=1&rel=0&controls=1&showinfo=0"
-                                frameborder="0" 
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                allowfullscreen>
-                            </iframe>
-                        </div>
-                        <p class="fuente"><i class="fab fa-youtube"></i> Guns N' Roses - Sweet Child O' Mine</p>
+                        <iframe src="https://www.youtube.com/embed/1w7OgIMMRc4?modestbranding=1&rel=0&controls=1" allowfullscreen></iframe>
                     </div>
                 </div>
             </div>
             
             <!-- Canción 2 -->
             <div class="cancion-card">
-                <div class="album-cover" style="background: linear-gradient(135deg, #0099f7, #f11712);">
-                    <span class="emoji-album">💖🎵</span>
-                </div>
                 <div class="cancion-info">
                     <h3>Yo Quisiera</h3>
                     <p class="artista">Reik</p>
                     <p class="significado">
-                        "Esta canción me recuerda a ti cada vez que la escucho. 
-                        Tiene esa mezcla de dulzura y nostalgia que siento en nuestras conversaciones 🌙"
+                        "Esta canción me recuerda a ti cada vez que la escucho 🌙"
                     </p>
                     <div class="reproductor">
-                        <div class="youtube-embed">
-                            <iframe 
-                                src="https://www.youtube.com/embed/v27COkZT4GY?modestbranding=1&rel=0&controls=1&showinfo=0"
-                                frameborder="0" 
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                allowfullscreen>
-                            </iframe>
-                        </div>
-                        <p class="fuente"><i class="fab fa-youtube"></i> Reik - Yo Quisiera</p>
+                        <iframe src="https://www.youtube.com/embed/v27COkZT4GY?modestbranding=1&rel=0&controls=1" allowfullscreen></iframe>
                     </div>
                 </div>
             </div>
             
             <!-- Canción 3 -->
             <div class="cancion-card">
-                <div class="album-cover" style="background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);">
-                    <span class="emoji-album">🏎️🎶</span>
-                </div>
                 <div class="cancion-info">
                     <h3>Cars Outside</h3>
                     <p class="artista">James Arthur</p>
                     <p class="significado">
-                        "Gracias por dedicarme esta canción. Cada vez que la escucho pienso en 
-                        esos momentos en que, a pesar de la distancia, sentimos cercanía 🚗💨"
+                        "Gracias por dedicarme esta canción 🚗💨"
                     </p>
                     <div class="reproductor">
-                        <div class="youtube-embed">
-                            <iframe 
-                                src="https://www.youtube.com/embed/QZKrLIoMyxY?modestbranding=1&rel=0&controls=1&showinfo=0"
-                                frameborder="0" 
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                allowfullscreen>
-                            </iframe>
-                        </div>
-                        <p class="fuente"><i class="fab fa-youtube"></i> James Arthur - Cars Outside</p>
+                        <iframe src="https://www.youtube.com/embed/QZKrLIoMyxY?modestbranding=1&rel=0&controls=1" allowfullscreen></iframe>
                     </div>
                 </div>
             </div>
             
-            <div class="playlist-footer">
-                <p class="dedicatoria">Esta playlist es un abrazo musical desde Perú 🇵🇪 hasta Colombia 🇨🇴</p>
-                <button id="btn-fin-musica" class="btn-siguiente">
-                    <i class="fas fa-heart"></i> ¡Gracias por Escuchar!
-                </button>
-            </div>
+            <button id="btn-fin-musica" class="btn-siguiente">
+                <i class="fas fa-heart"></i> Continuar
+            </button>
         </div>
-    </div>
+    </section>
 
     <script src="script.js"></script>
 </body>
-    </html>
+</html>
