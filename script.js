@@ -233,4 +233,53 @@ function configurarCarta() {
     if (btnMusica) {
         btnMusica.addEventListener('click', function() {
             const carta = document.getElementById('carta-container');
-            const musicaSection = document.getElementById('seccion
+            const musicaSection = document.getElementById('seccion-musica');
+            
+            if (carta && musicaSection) {
+                carta.classList.add('hidden');
+                musicaSection.classList.remove('hidden');
+            }
+        });
+    }
+}
+
+// ===== EFECTO ESCRITURA =====
+function efectoEscrituraCarta() {
+    const parrafos = document.querySelectorAll('.papel-carta p');
+    parrafos.forEach((parrafo, index) => {
+        const texto = parrafo.textContent;
+        parrafo.textContent = '';
+        
+        setTimeout(() => {
+            let i = 0;
+            function escribir() {
+                if (i < texto.length) {
+                    parrafo.textContent += texto.charAt(i);
+                    i++;
+                    setTimeout(escribir, 30);
+                }
+            }
+            escribir();
+        }, index * 2000);
+    });
+}
+
+// ===== DEBUG =====
+window.debug = {
+    saltarACarta: function() {
+        document.querySelector('.container').style.display = 'none';
+        document.getElementById('particles').style.display = 'none';
+        document.querySelector('.music-controls').style.display = 'none';
+        document.getElementById('carta-container').classList.remove('hidden');
+        crearEmojisFlotantes();
+    },
+    saltarAMusica: function() {
+        document.getElementById('carta-container').classList.add('hidden');
+        document.getElementById('seccion-musica').classList.remove('hidden');
+    },
+    reiniciar: function() {
+        location.reload();
+    }
+};
+
+console.log("🎁 Script listo! Usa debug.saltarACarta() para probar");
