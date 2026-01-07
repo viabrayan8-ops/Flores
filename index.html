@@ -4,14 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Para Ti ✨</title>
+    <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- Música de fondo -->
-    <audio id="musica" loop>
-        <source src="https://assets.mixkit.co/music/preview/mixkit-romantic-sunset-687.mp3" type="audio/mpeg">
+    <!-- AUDIO DE FONDO CON TU ARCHIVO -->
+    <audio id="musica" loop preload="auto">
+        <source src="AlwaysWiftMe.mp3" type="audio/mpeg">
+        <source src="https://assets.mixkit.co/music/preview/mixkit-romantic-sunset-687.mp3" type="audio/mpeg" class="fallback-audio">
     </audio>
     
     <!-- Control música -->
@@ -22,20 +23,17 @@
         <span class="music-label">Música: On</span>
     </div>
 
-    <!-- Textos iniciales -->
-    <div class="container">
-        <h1 id="texto">💖</h1>
+    <!-- PANTALLA INICIAL -->
+    <div class="pantalla-inicial" id="pantalla-inicial">
+        <div class="container">
+            <h1 id="texto">💖</h1>
+        </div>
+        <div id="particles"></div>
+        <div id="flash-overlay"></div>
     </div>
 
-    <!-- Partículas -->
-    <div id="particles"></div>
-
-    <!-- Flash -->
-    <div id="flash-overlay"></div>
-
-    <!-- Carta -->
-    <div id="carta-container" class="hidden">
-        <!-- Fondo animado con emojis -->
+    <!-- CARTA -->
+    <div id="carta-container" class="pantalla-oculta">
         <div id="fondo-animado"></div>
         
         <div class="sobre" id="sobre-exterior">
@@ -50,7 +48,7 @@
             </div>
         </div>
         
-        <div id="contenido-interior" class="hidden">
+        <div id="contenido-interior" class="oculto">
             <div class="diploma">
                 <div class="diploma-header">
                     <h2>DIPLOMA</h2>
@@ -88,15 +86,14 @@
                 </div>
             </div>
             
-            <!-- Botón para música -->
             <button id="btn-ir-musica" class="btn-magico">
                 <i class="fas fa-music"></i> Escuchar Nuestra Playlist
             </button>
         </div>
     </div>
 
-    <!-- Sección Música -->
-    <section id="seccion-musica" class="hidden">
+    <!-- MÚSICA -->
+    <section id="seccion-musica" class="pantalla-oculta">
         <div class="playlist-container">
             <h2><i class="fas fa-music"></i> Nuestra Playlist Especial</h2>
             <p class="subtitulo">Canciones que cuentan algo de nosotros</p>
@@ -115,12 +112,7 @@
                     </p>
                     <div class="reproductor">
                         <div class="youtube-embed">
-                            <iframe 
-                                src="https://www.youtube.com/embed/1w7OgIMMRc4?modestbranding=1&rel=0&controls=1&showinfo=0"
-                                frameborder="0" 
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                allowfullscreen>
-                            </iframe>
+                            <iframe src="https://www.youtube.com/embed/1w7OgIMMRc4?modestbranding=1&rel=0&controls=1&showinfo=0" allowfullscreen></iframe>
                         </div>
                         <p class="fuente"><i class="fab fa-youtube"></i> Guns N' Roses - Sweet Child O' Mine</p>
                     </div>
@@ -141,12 +133,7 @@
                     </p>
                     <div class="reproductor">
                         <div class="youtube-embed">
-                            <iframe 
-                                src="https://www.youtube.com/embed/v27COkZT4GY?modestbranding=1&rel=0&controls=1&showinfo=0"
-                                frameborder="0" 
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                allowfullscreen>
-                            </iframe>
+                            <iframe src="https://www.youtube.com/embed/v27COkZT4GY?modestbranding=1&rel=0&controls=1&showinfo=0" allowfullscreen></iframe>
                         </div>
                         <p class="fuente"><i class="fab fa-youtube"></i> Reik - Yo Quisiera</p>
                     </div>
@@ -167,12 +154,7 @@
                     </p>
                     <div class="reproductor">
                         <div class="youtube-embed">
-                            <iframe 
-                                src="https://www.youtube.com/embed/QZKrLIoMyxY?modestbranding=1&rel=0&controls=1&showinfo=0"
-                                frameborder="0" 
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                allowfullscreen>
-                            </iframe>
+                            <iframe src="https://www.youtube.com/embed/QZKrLIoMyxY?modestbranding=1&rel=0&controls=1&showinfo=0" allowfullscreen></iframe>
                         </div>
                         <p class="fuente"><i class="fab fa-youtube"></i> James Arthur - Cars Outside</p>
                     </div>
@@ -182,7 +164,7 @@
             <div class="playlist-footer">
                 <p class="dedicatoria">Esta playlist es un abrazo musical desde Perú 🇵🇪 hasta Colombia 🇨🇴</p>
                 <button id="btn-fin-musica" class="btn-siguiente">
-                    <i class="fas fa-heart"></i> Continuar al Siguiente :)
+                    <i class="fas fa-images"></i> Continuar
                 </button>
             </div>
         </div>
