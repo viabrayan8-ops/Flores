@@ -1,4 +1,4 @@
-// ===== CONFIGURACIÓN =====
+// ===== CONFIGURACIÓN SIMPLE =====
 const textos = [
     "Para mi persona especial...",
     "La que ilumina mis días desde Colombia 🇨🇴",
@@ -16,110 +16,97 @@ const textos = [
     "3... 2... 1... 💫"
 ];
 
-// ===== ESTADO =====
-let textoIndex = 0;
+// ===== VARIABLES GLOBALES =====
+let indexTexto = 0;
 let musicaFondo;
 
-// ===== INICIAR CUANDO PÁGINA CARGUE =====
+// ===== INICIAR TODO CUANDO LA PÁGINA CARGUE =====
 document.addEventListener('DOMContentLoaded', function() {
-    console.log("🚀 Iniciando regalo...");
+    console.log("✅ Página cargada, iniciando...");
     
-    iniciarMusica();
+    // Iniciar música de fondo
+    iniciarMusicaFondo();
+    
+    // Crear partículas
     crearParticulas();
-    iniciarTexto();
+    
+    // Mostrar primer texto
+    mostrarSiguienteTexto();
+    
+    // Configurar botones
     configurarBotones();
 });
 
-// ===== MÚSICA =====
-function iniciarMusica() {
+// ===== MÚSICA DE FONDO =====
+function iniciarMusicaFondo() {
     musicaFondo = document.getElementById('musica');
-    const toggleBtn = document.getElementById('music-toggle');
-    const label = document.querySelector('.music-label');
+    const musicToggle = document.getElementById('music-toggle');
+    const musicLabel = document.querySelector('.music-label');
     
-    if (!musicaFondo || !toggleBtn) {
-        console.log("⚠️ No se encontró el audio");
-        return;
-    }
+    if (!musicaFondo || !musicToggle) return;
     
-    console.log("🎵 Audio encontrado:", musicaFondo.src);
-    
-    // Intentar carrar tu audio personalizado
-    musicaFondo.load();
-    
-    // Control play/pause
-    toggleBtn.addEventListener('click', function() {
-        if (musicaFondo.paused) {
-            musicaFondo.play().then(() => {
-                console.log("▶️ Música iniciada");
-                toggleBtn.innerHTML = '<i class="fas fa-pause"></i>';
-                if (label) label.textContent = 'Música: On';
-            }).catch(error => {
-                console.log("❌ Error al reproducir:", error);
-                // Intentar con audio de respaldo
-                const fallback = document.querySelector('.fallback-audio');
-                if (fallback) {
-                    musicaFondo.src = fallback.src;
-                    musicaFondo.play();
-                }
-            });
-        } else {
-            musicaFondo.pause();
-            toggleBtn.innerHTML = '<i class="fas fa-play"></i>';
-            if (label) label.textContent = 'Música: Off';
-        }
+    // Auto-iniciar con primer clic
+    document.addEventListener('click', function iniciarConClick() {
+        musicaFondo.play().catch(e => console.log("Esperando interacción..."));
+        document.removeEventListener('click', iniciarConClick);
     });
     
-    // Auto-iniciar con primer clic en la página
-    document.body.addEventListener('click', function autoIniciar() {
+    // Control de play/pause
+    musicToggle.addEventListener('click', function() {
         if (musicaFondo.paused) {
-            musicaFondo.play().catch(e => {
-                console.log("Esperando interacción...");
-            });
+            musicaFondo.play();
+            musicToggle.innerHTML = '<i class="fas fa-pause"></i>';
+            if (musicLabel) musicLabel.textContent = 'Música: On';
+        } else {
+            musicaFondo.pause();
+            musicToggle.innerHTML = '<i class="fas fa-play"></i>';
+            if (musicLabel) musicLabel.textContent = 'Música: Off';
         }
-        document.body.removeEventListener('click', autoIniciar);
-    }, { once: true });
+    });
 }
 
 // ===== PARTÍCULAS =====
 function crearParticulas() {
-    const container = document.getElementById('particles');
-    if (!container) return;
+    const particlesContainer = document.getElementById('particles');
+    if (!particlesContainer) return;
     
     for (let i = 0; i < 50; i++) {
-        const particula = document.createElement('span');
-        particula.style.left = Math.random() * 100 + 'vw';
-        particula.style.animationDuration = (5 + Math.random() * 10) + 's';
-        particula.style.opacity = Math.random() * 0.8;
-        particula.style.animationDelay = Math.random() * 5 + 's';
-        container.appendChild(particula);
+        const particle = document.createElement("span");
+        particle.style.left = Math.random() * 100 + "vw";
+        particle.style.animationDuration = (5 + Math.random() * 10) + "s";
+        particle.style.opacity = Math.random() * 0.8;
+        particle.style.animationDelay = Math.random() * 5 + "s";
+        particlesContainer.appendChild(particle);
     }
 }
 
-// ===== TEXTO =====
-function iniciarTexto() {
-    const textoElem = document.getElementById('texto');
-    if (!textoElem) return;
-    
-    mostrarTexto(textoElem);
-}
-
-function mostrarTexto(elemento) {
-    if (textoIndex >= textos.length) {
+// ===== MOSTRAR TEXTOS =====
+function mostrarSiguienteTexto() {
+    const textoElemento = document.getElementById('texto');
+    if (!textoElemento || indexTexto >= textos.length) {
+        // Terminados los textos, activar flash
         setTimeout(activarFlash, 2000);
         return;
     }
     
-    elemento.style.opacity = '0';
+    // Efecto fade out
+    textoElemento.style.opacity = '0';
     
     setTimeout(() => {
-        elemento.textContent = textos[textoIndex];
-        elemento.style.opacity = '1';
+        // Cambiar texto
+        textoElemento.textContent = textos[indexTexto];
         
-        textoIndex++;
+        // Efecto fade in
+        textoElemento.style.opacity = '1';
         
-        if (textoIndex < textos.length) {
-            setTimeout(() => mostrarTexto(elemento), 4000);
+        // Pasar al siguiente
+        indexTexto++;
+        
+        // Programar siguiente texto (4 segundos)
+        if (indexTexto < textos.length) {
+            setTimeout(mostrarSiguienteTexto, 4000);
         } else {
+            // Último texto, esperar y mostrar flash
             setTimeout(activarFlash, 4000);
         }
     }, 2000);
@@ -127,130 +114,90 @@ function mostrarTexto(elemento) {
 
 // ===== FLASH =====
 function activarFlash() {
-    const flash = document.getElementById('flash-overlay');
-    if (!flash) {
+    const flashOverlay = document.getElementById('flash-overlay');
+    if (!flashOverlay) {
         mostrarCarta();
         return;
     }
     
-    flash.style.opacity = '1';
-    let tamaño = 0;
+    flashOverlay.style.opacity = '1';
+    let scale = 0;
+    const velocidad = 5;
     
-    function animar() {
-        tamaño += 5;
-        flash.style.width = tamaño + 'vh';
-        flash.style.height = tamaño + 'vh';
+    function animarFlash() {
+        scale += velocidad;
+        flashOverlay.style.width = `${scale}vh`;
+        flashOverlay.style.height = `${scale}vh`;
         
-        if (tamaño < 300) {
-            requestAnimationFrame(animar);
+        if (scale < 300) {
+            requestAnimationFrame(animarFlash);
         } else {
-            flash.style.opacity = '0';
-            setTimeout(mostrarCarta, 500);
+            flashOverlay.style.opacity = '0';
+            setTimeout(() => {
+                mostrarCarta();
+            }, 500);
         }
     }
     
-    animar();
-}
-
-// ===== EMOJIS FLOTANTES =====
-function crearEmojisFlotantes() {
-    const fondo = document.getElementById('fondo-animado');
-    if (!fondo) return;
-    
-    fondo.innerHTML = '';
-    
-    // Crear emojis (15 perros, 10 gatos)
-    for (let i = 0; i < 25; i++) {
-        const emoji = document.createElement('div');
-        emoji.className = 'emoji-flotante';
-        
-        // 60% perros, 40% gatos
-        const esPerro = i < 15;
-        emoji.textContent = esPerro ? '🐶' : '🐱';
-        
-        // Tamaño aleatorio
-        const tamaño = 30 + Math.random() * 50;
-        emoji.style.fontSize = tamaño + 'px';
-        
-        // Posición
-        emoji.style.left = Math.random() * 100 + 'vw';
-        
-        // Velocidad
-        const velocidad = 15 + Math.random() * 25;
-        emoji.style.animationDuration = velocidad + 's';
-        
-        // Retraso
-        emoji.style.animationDelay = Math.random() * 15 + 's';
-        
-        // Opacidad
-        emoji.style.opacity = 0.3 + Math.random() * 0.5;
-        
-        // Algunos giran
-        if (Math.random() > 0.7) {
-            emoji.style.animation += ', girarEmoji 20s linear infinite';
-        }
-        
-        fondo.appendChild(emoji);
-    }
+    animarFlash();
 }
 
 // ===== MOSTRAR CARTA =====
 function mostrarCarta() {
-    // Ocultar pantalla inicial
-    const pantallaInicial = document.getElementById('pantalla-inicial');
-    const controls = document.querySelector('.music-controls');
+    // Ocultar elementos iniciales
+    const container = document.querySelector('.container');
+    const particles = document.getElementById('particles');
+    const musicControls = document.querySelector('.music-controls');
     
-    if (pantallaInicial) pantallaInicial.style.display = 'none';
-    if (controls) controls.style.display = 'flex';
+    if (container) container.style.display = 'none';
+    if (particles) particles.style.display = 'none';
+    if (musicControls) musicControls.style.display = 'none';
     
     // Mostrar carta
-    const carta = document.getElementById('carta-container');
-    if (carta) {
-        carta.classList.remove('pantalla-oculta');
-        crearEmojisFlotantes();
+    const cartaContainer = document.getElementById('carta-container');
+    if (cartaContainer) {
+        cartaContainer.classList.remove('hidden');
         configurarCarta();
     }
 }
 
 // ===== CONFIGURAR CARTA =====
 function configurarCarta() {
-    const sobre = document.getElementById('sobre-exterior');
-    const contenido = document.getElementById('contenido-interior');
-    const btnMusica = document.getElementById('btn-ir-musica');
+    const sobreExterior = document.getElementById('sobre-exterior');
+    const contenidoInterior = document.getElementById('contenido-interior');
+    const btnIrMusica = document.getElementById('btn-ir-musica');
     
     // Abrir sobre
-    if (sobre) {
-        sobre.addEventListener('click', function() {
+    if (sobreExterior) {
+        sobreExterior.addEventListener('click', function() {
             this.classList.add('abriendo');
             
             setTimeout(() => {
-                if (contenido) {
-                    contenido.classList.remove('oculto');
-                    contenido.style.animation = 'aparecerContenido 1s ease-out forwards';
-                    efectoEscritura();
+                if (contenidoInterior) {
+                    contenidoInterior.classList.remove('hidden');
+                    efectoEscrituraCarta();
                 }
             }, 1500);
         });
     }
     
-    // Botón para música
-    if (btnMusica) {
-        btnMusica.addEventListener('click', function() {
-            const carta = document.getElementById('carta-container');
-            const musicaSection = document.getElementById('seccion-musica');
+    // Botón para ir a música
+    if (btnIrMusica) {
+        btnIrMusica.addEventListener('click', function() {
+            const cartaContainer = document.getElementById('carta-container');
+            const seccionMusica = document.getElementById('seccion-musica');
             
-            if (carta && musicaSection) {
-                carta.classList.add('pantalla-oculta');
-                musicaSection.classList.remove('pantalla-oculta');
+            if (cartaContainer && seccionMusica) {
+                cartaContainer.classList.add('hidden');
+                seccionMusica.classList.remove('hidden');
             }
         });
     }
 }
 
-// ===== EFECTO ESCRITURA =====
-function efectoEscritura() {
+// ===== EFECTO ESCRITURA CARTA =====
+function efectoEscrituraCarta() {
     const parrafos = document.querySelectorAll('.papel-carta p');
-    
     parrafos.forEach((parrafo, index) => {
         const textoOriginal = parrafo.textContent;
         parrafo.textContent = '';
@@ -269,41 +216,32 @@ function efectoEscritura() {
     });
 }
 
-// ===== CONFIGURAR BOTONES =====
+// ===== CONFIGURAR BOTONES MUSICA =====
 function configurarBotones() {
     const btnFinMusica = document.getElementById('btn-fin-musica');
-    
     if (btnFinMusica) {
         btnFinMusica.addEventListener('click', function() {
-            alert('🎵 ¡Gracias por escuchar nuestra playlist!\n\nPronto: Nuestras aventuras en juegos 🎮');
+            alert('🎵 ¡Gracias por escuchar nuestra playlist especial!\n\nEl viaje continúa... ✨');
         });
     }
 }
 
-// ===== DEBUG =====
+// ===== FUNCIONES DE DEBUG (para probar) =====
 window.debug = {
     saltarACarta: function() {
-        document.getElementById('pantalla-inicial').style.display = 'none';
-        document.getElementById('carta-container').classList.remove('pantalla-oculta');
-        crearEmojisFlotantes();
+        document.querySelector('.container').style.display = 'none';
+        document.getElementById('particles').style.display = 'none';
+        document.querySelector('.music-controls').style.display = 'none';
+        document.getElementById('carta-container').classList.remove('hidden');
     },
     saltarAMusica: function() {
-        document.getElementById('carta-container').classList.add('pantalla-oculta');
-        document.getElementById('seccion-musica').classList.remove('pantalla-oculta');
+        document.getElementById('carta-container').classList.add('hidden');
+        document.getElementById('seccion-musica').classList.remove('hidden');
     },
     reiniciar: function() {
         location.reload();
-    },
-    probarAudio: function() {
-        const audio = document.getElementById('musica');
-        if (audio) {
-            audio.play().then(() => {
-                console.log("✅ Audio funcionando");
-            }).catch(e => {
-                console.log("❌ Error audio:", e);
-            });
-        }
     }
 };
 
-console.log("✅ Todo cargado. Usa debug.saltarACarta() para probar");
+console.log("🎁 Script cargado correctamente!");
+console.log("Usa debug.saltarACarta() o debug.saltarAMusica() para probar");
