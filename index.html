@@ -4,12 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Para Ti ✨</title>
-    <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- Música -->
+    <!-- Música de fondo -->
     <audio id="musica" loop>
         <source src="https://assets.mixkit.co/music/preview/mixkit-romantic-sunset-687.mp3" type="audio/mpeg">
     </audio>
@@ -35,7 +35,7 @@
 
     <!-- Carta -->
     <div id="carta-container" class="hidden">
-        <!-- Fondo animado -->
+        <!-- Fondo animado con emojis -->
         <div id="fondo-animado"></div>
         
         <div class="sobre" id="sobre-exterior">
@@ -52,7 +52,6 @@
         
         <div id="contenido-interior" class="hidden">
             <div class="diploma">
-                <!-- contenido del diploma -->
                 <div class="diploma-header">
                     <h2>DIPLOMA</h2>
                     <h3>A MI PERSONA ESPECIAL</h3>
@@ -89,15 +88,15 @@
                 </div>
             </div>
             
-            <!-- BOTÓN SIMPLE -->
+            <!-- Botón para música -->
             <button id="btn-ir-musica" class="btn-magico">
                 <i class="fas fa-music"></i> Escuchar Nuestra Playlist
             </button>
         </div>
     </div>
 
-    <!-- Sección Música (SOLO ESTA) -->
-    <div id="seccion-musica" class="hidden">
+    <!-- Sección Música -->
+    <section id="seccion-musica" class="hidden">
         <div class="playlist-container">
             <h2><i class="fas fa-music"></i> Nuestra Playlist Especial</h2>
             <p class="subtitulo">Canciones que cuentan algo de nosotros</p>
@@ -183,11 +182,11 @@
             <div class="playlist-footer">
                 <p class="dedicatoria">Esta playlist es un abrazo musical desde Perú 🇵🇪 hasta Colombia 🇨🇴</p>
                 <button id="btn-fin-musica" class="btn-siguiente">
-                    <i class="fas fa-heart"></i> ¡Gracias por Escuchar!
+                    <i class="fas fa-heart"></i> Continuar al Siguiente
                 </button>
             </div>
         </div>
-    </div>
+    </section>
 
     <script src="script.js"></script>
 </body>
