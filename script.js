@@ -16,91 +16,109 @@ const textos = [
     "3... 2... 1... 💫"
 ];
 
-// ===== VARIABLES =====
-let indexTexto = 0;
+// ===== ESTADO =====
+let textoIndex = 0;
+let musicaFondo;
 
-// ===== INICIAR CUANDO LA PÁGINA CARGUE =====
+// ===== INICIAR CUANDO PÁGINA CARGUE =====
 document.addEventListener('DOMContentLoaded', function() {
-    console.log("✅ Página cargada");
+    console.log("🚀 Iniciando regalo...");
     
-    // Iniciar música
-    iniciarMusicaFondo();
-    
-    // Crear partículas
+    iniciarMusica();
     crearParticulas();
-    
-    // Mostrar primer texto
-    mostrarSiguienteTexto();
-    
-    // Configurar botón final de música
-    const btnFinMusica = document.getElementById('btn-fin-musica');
-    if (btnFinMusica) {
-        btnFinMusica.addEventListener('click', function() {
-            alert('🎵 ¡Gracias por escuchar! El regalo continúa...');
-        });
-    }
+    iniciarTexto();
+    configurarBotones();
 });
 
-// ===== MÚSICA DE FONDO =====
-function iniciarMusicaFondo() {
-    const musica = document.getElementById('musica');
-    const musicToggle = document.getElementById('music-toggle');
-    const musicLabel = document.querySelector('.music-label');
+// ===== MÚSICA =====
+function iniciarMusica() {
+    musicaFondo = document.getElementById('musica');
+    const toggleBtn = document.getElementById('music-toggle');
+    const label = document.querySelector('.music-label');
     
-    if (!musica || !musicToggle) return;
+    if (!musicaFondo || !toggleBtn) {
+        console.log("⚠️ No se encontró el audio");
+        return;
+    }
     
-    // Auto-iniciar con primer clic
-    document.addEventListener('click', function iniciarConClick() {
-        musica.play().catch(e => console.log("Esperando interacción..."));
-        document.removeEventListener('click', iniciarConClick);
-    });
+    console.log("🎵 Audio encontrado:", musicaFondo.src);
+    
+    // Intentar carrar tu audio personalizado
+    musicaFondo.load();
     
     // Control play/pause
-    musicToggle.addEventListener('click', function() {
-        if (musica.paused) {
-            musica.play();
-            musicToggle.innerHTML = '<i class="fas fa-pause"></i>';
-            if (musicLabel) musicLabel.textContent = 'Música: On';
+    toggleBtn.addEventListener('click', function() {
+        if (musicaFondo.paused) {
+            musicaFondo.play().then(() => {
+                console.log("▶️ Música iniciada");
+                toggleBtn.innerHTML = '<i class="fas fa-pause"></i>';
+                if (label) label.textContent = 'Música: On';
+            }).catch(error => {
+                console.log("❌ Error al reproducir:", error);
+                // Intentar con audio de respaldo
+                const fallback = document.querySelector('.fallback-audio');
+                if (fallback) {
+                    musicaFondo.src = fallback.src;
+                    musicaFondo.play();
+                }
+            });
         } else {
-            musica.pause();
-            musicToggle.innerHTML = '<i class="fas fa-play"></i>';
-            if (musicLabel) musicLabel.textContent = 'Música: Off';
+            musicaFondo.pause();
+            toggleBtn.innerHTML = '<i class="fas fa-play"></i>';
+            if (label) label.textContent = 'Música: Off';
         }
     });
+    
+    // Auto-iniciar con primer clic en la página
+    document.body.addEventListener('click', function autoIniciar() {
+        if (musicaFondo.paused) {
+            musicaFondo.play().catch(e => {
+                console.log("Esperando interacción...");
+            });
+        }
+        document.body.removeEventListener('click', autoIniciar);
+    }, { once: true });
 }
 
 // ===== PARTÍCULAS =====
 function crearParticulas() {
-    const particles = document.getElementById('particles');
-    if (!particles) return;
+    const container = document.getElementById('particles');
+    if (!container) return;
     
     for (let i = 0; i < 50; i++) {
-        const particle = document.createElement("span");
-        particle.style.left = Math.random() * 100 + "vw";
-        particle.style.animationDuration = (5 + Math.random() * 10) + "s";
-        particle.style.opacity = Math.random() * 0.8;
-        particle.style.animationDelay = Math.random() * 5 + "s";
-        particles.appendChild(particle);
+        const particula = document.createElement('span');
+        particula.style.left = Math.random() * 100 + 'vw';
+        particula.style.animationDuration = (5 + Math.random() * 10) + 's';
+        particula.style.opacity = Math.random() * 0.8;
+        particula.style.animationDelay = Math.random() * 5 + 's';
+        container.appendChild(particula);
     }
 }
 
-// ===== MOSTRAR TEXTOS =====
-function mostrarSiguienteTexto() {
-    const textoElemento = document.getElementById('texto');
-    if (!textoElemento || indexTexto >= textos.length) {
+// ===== TEXTO =====
+function iniciarTexto() {
+    const textoElem = document.getElementById('texto');
+    if (!textoElem) return;
+    
+    mostrarTexto(textoElem);
+}
+
+function mostrarTexto(elemento) {
+    if (textoIndex >= textos.length) {
         setTimeout(activarFlash, 2000);
         return;
     }
     
-    textoElemento.style.opacity = '0';
+    elemento.style.opacity = '0';
     
     setTimeout(() => {
-        textoElemento.textContent = textos[indexTexto];
-        textoElemento.style.opacity = '1';
-        indexTexto++;
+        elemento.textContent = textos[textoIndex];
+        elemento.style.opacity = '1';
         
-        if (indexTexto < textos.length) {
-            setTimeout(mostrarSiguienteTexto, 4000);
+        textoIndex++;
+        
+        if (textoIndex < textos.length) {
+            setTimeout(() => mostrarTexto(elemento), 4000);
         } else {
             setTimeout(activarFlash, 4000);
         }
@@ -116,14 +134,14 @@ function activarFlash() {
     }
     
     flash.style.opacity = '1';
-    let escala = 0;
+    let tamaño = 0;
     
     function animar() {
-        escala += 5;
-        flash.style.width = `${escala}vh`;
-        flash.style.height = `${escala}vh`;
+        tamaño += 5;
+        flash.style.width = tamaño + 'vh';
+        flash.style.height = tamaño + 'vh';
         
-        if (escala < 300) {
+        if (tamaño < 300) {
             requestAnimationFrame(animar);
         } else {
             flash.style.opacity = '0';
@@ -141,70 +159,55 @@ function crearEmojisFlotantes() {
     
     fondo.innerHTML = '';
     
-    // Crear 25 emojis (15 perros, 10 gatos)
+    // Crear emojis (15 perros, 10 gatos)
     for (let i = 0; i < 25; i++) {
-        setTimeout(() => {
-            const emoji = document.createElement('div');
-            emoji.className = 'emoji-flotante';
-            
-            // Alternar entre perro y gato (más perros porque es Snoopy)
-            const esPerro = i < 15;
-            emoji.textContent = esPerro ? '🐶' : '🐱';
-            
-            // Tamaño aleatorio
-            const tamaño = 30 + Math.random() * 50;
-            emoji.style.fontSize = `${tamaño}px`;
-            
-            // Posición horizontal aleatoria
-            emoji.style.left = `${Math.random() * 100}vw`;
-            
-            // Velocidad aleatoria (más lenta para algunos)
-            const velocidad = 15 + Math.random() * 25;
-            emoji.style.animationDuration = `${velocidad}s`;
-            
-            // Retraso inicial aleatorio
-            emoji.style.animationDelay = `${Math.random() * 15}s`;
-            
-            // Opacidad aleatoria
-            emoji.style.opacity = `${0.3 + Math.random() * 0.5}`;
-            
-            // Algunos giran
-            if (Math.random() > 0.7) {
-                emoji.style.animation += ', girar 20s linear infinite';
-            }
-            
-            fondo.appendChild(emoji);
-        }, i * 150);
-    }
-    
-    // Agregar animación de giro si no existe
-    if (!document.getElementById('estilo-giro')) {
-        const estilo = document.createElement('style');
-        estilo.id = 'estilo-giro';
-        estilo.textContent = `
-            @keyframes girar {
-                from { transform: rotate(0deg); }
-                to { transform: rotate(360deg); }
-            }
-        `;
-        document.head.appendChild(estilo);
+        const emoji = document.createElement('div');
+        emoji.className = 'emoji-flotante';
+        
+        // 60% perros, 40% gatos
+        const esPerro = i < 15;
+        emoji.textContent = esPerro ? '🐶' : '🐱';
+        
+        // Tamaño aleatorio
+        const tamaño = 30 + Math.random() * 50;
+        emoji.style.fontSize = tamaño + 'px';
+        
+        // Posición
+        emoji.style.left = Math.random() * 100 + 'vw';
+        
+        // Velocidad
+        const velocidad = 15 + Math.random() * 25;
+        emoji.style.animationDuration = velocidad + 's';
+        
+        // Retraso
+        emoji.style.animationDelay = Math.random() * 15 + 's';
+        
+        // Opacidad
+        emoji.style.opacity = 0.3 + Math.random() * 0.5;
+        
+        // Algunos giran
+        if (Math.random() > 0.7) {
+            emoji.style.animation += ', girarEmoji 20s linear infinite';
+        }
+        
+        fondo.appendChild(emoji);
     }
 }
 
 // ===== MOSTRAR CARTA =====
 function mostrarCarta() {
-    const container = document.querySelector('.container');
-    const particles = document.getElementById('particles');
+    // Ocultar pantalla inicial
+    const pantallaInicial = document.getElementById('pantalla-inicial');
     const controls = document.querySelector('.music-controls');
     
-    if (container) container.style.display = 'none';
-    if (particles) particles.style.display = 'none';
-    if (controls) controls.style.display = 'none';
+    if (pantallaInicial) pantallaInicial.style.display = 'none';
+    if (controls) controls.style.display = 'flex';
     
+    // Mostrar carta
     const carta = document.getElementById('carta-container');
     if (carta) {
-        carta.classList.remove('hidden');
-        crearEmojisFlotantes(); // <- ¡EMOJIS AQUÍ!
+        carta.classList.remove('pantalla-oculta');
+        crearEmojisFlotantes();
         configurarCarta();
     }
 }
@@ -222,8 +225,9 @@ function configurarCarta() {
             
             setTimeout(() => {
                 if (contenido) {
-                    contenido.classList.remove('hidden');
-                    efectoEscrituraCarta();
+                    contenido.classList.remove('oculto');
+                    contenido.style.animation = 'aparecerContenido 1s ease-out forwards';
+                    efectoEscritura();
                 }
             }, 1500);
         });
@@ -236,25 +240,26 @@ function configurarCarta() {
             const musicaSection = document.getElementById('seccion-musica');
             
             if (carta && musicaSection) {
-                carta.classList.add('hidden');
-                musicaSection.classList.remove('hidden');
+                carta.classList.add('pantalla-oculta');
+                musicaSection.classList.remove('pantalla-oculta');
             }
         });
     }
 }
 
 // ===== EFECTO ESCRITURA =====
-function efectoEscrituraCarta() {
+function efectoEscritura() {
     const parrafos = document.querySelectorAll('.papel-carta p');
+    
     parrafos.forEach((parrafo, index) => {
-        const texto = parrafo.textContent;
+        const textoOriginal = parrafo.textContent;
         parrafo.textContent = '';
         
         setTimeout(() => {
             let i = 0;
             function escribir() {
-                if (i < texto.length) {
-                    parrafo.textContent += texto.charAt(i);
+                if (i < textoOriginal.length) {
+                    parrafo.textContent += textoOriginal.charAt(i);
                     i++;
                     setTimeout(escribir, 30);
                 }
@@ -264,22 +269,41 @@ function efectoEscrituraCarta() {
     });
 }
 
+// ===== CONFIGURAR BOTONES =====
+function configurarBotones() {
+    const btnFinMusica = document.getElementById('btn-fin-musica');
+    
+    if (btnFinMusica) {
+        btnFinMusica.addEventListener('click', function() {
+            alert('🎵 ¡Gracias por escuchar nuestra playlist!\n\nPronto: Nuestras aventuras en juegos 🎮');
+        });
+    }
+}
+
 // ===== DEBUG =====
 window.debug = {
     saltarACarta: function() {
-        document.querySelector('.container').style.display = 'none';
-        document.getElementById('particles').style.display = 'none';
-        document.querySelector('.music-controls').style.display = 'none';
-        document.getElementById('carta-container').classList.remove('hidden');
+        document.getElementById('pantalla-inicial').style.display = 'none';
+        document.getElementById('carta-container').classList.remove('pantalla-oculta');
         crearEmojisFlotantes();
     },
     saltarAMusica: function() {
-        document.getElementById('carta-container').classList.add('hidden');
-        document.getElementById('seccion-musica').classList.remove('hidden');
+        document.getElementById('carta-container').classList.add('pantalla-oculta');
+        document.getElementById('seccion-musica').classList.remove('pantalla-oculta');
     },
     reiniciar: function() {
         location.reload();
+    },
+    probarAudio: function() {
+        const audio = document.getElementById('musica');
+        if (audio) {
+            audio.play().then(() => {
+                console.log("✅ Audio funcionando");
+            }).catch(e => {
+                console.log("❌ Error audio:", e);
+            });
+        }
     }
 };
 
-console.log("🎁 Script listo! Usa debug.saltarACarta() para probar");
+console.log("✅ Todo cargado. Usa debug.saltarACarta() para probar");
