@@ -224,7 +224,7 @@
         </div>
     </div>
 </div>
-    <!-- Sección Final -->
+<!-- Sección Final COMPLETA y FUNCIONAL -->
 <div id="seccion-final" class="hidden">
     <!-- Fuegos artificiales -->
     <div id="fuegos-artificiales"></div>
@@ -242,7 +242,7 @@
         <div class="agradecimiento-container">
             <div class="tarjeta-agradecimiento">
                 <div class="corazon-titulo">💖</div>
-                <h4>Para Mi Persona Especial</h4>
+                <h4>Para Mi Amiga Especial</h4>
                 <p class="texto-agradecimiento">
                     Gracias por estos 4 meses increíbles llenos de risas, conversaciones 
                     y momentos bonitos. Eres una persona única que llegó para quedarse 
@@ -263,16 +263,38 @@
             </div>
         </div>
         
-        <!-- Audio grabado por ti -->
+        <!-- Audio grabado por ti - VERSIÓN FUNCIONAL -->
         <div class="audio-container">
-            <h4><i class="fas fa-microphone"></i> Un Mensaje Especial Para Ti</h4>
+            <h4><i class="fas fa-microphone"></i> Mi Mensaje de Voz Para Ti</h4>
             <div class="reproductor-audio">
+                <!-- REPRODUCTOR PRINCIPAL -->
                 <audio id="audio-personal" controls>
-                    <source src="https://github.com/viabrayan8-ops/Flores/blob/main/mivoz" type="audio/mpeg">
+                    <!-- ESTA URL SÍ FUNCIONA (la que descargaste) -->
+                    <source src="https://raw.githubusercontent.com/viabrayan8-ops/Flores/refs/heads/main/mivoz" type="audio/mpeg">
+                    
+                    <!-- VERSIÓN ALTERNATIVA POR SI ACASO -->
+                    <source src="https://github.com/viabrayan8-ops/Flores/raw/refs/heads/main/mivoz" type="audio/mpeg">
+                    
+                    <!-- BACKUP MUSICAL -->
+                    <source src="https://assets.mixkit.co/music/preview/mixkit-romantic-sunset-687.mp3" type="audio/mpeg">
+                    
                     Tu navegador no soporta el elemento de audio.
                 </audio>
+                
+                <!-- BOTÓN DE DESCARGA DIRECTA (por si el reproductor falla) -->
+                <div class="descarga-directa">
+                    <a href="https://raw.githubusercontent.com/viabrayan8-ops/Flores/refs/heads/main/mivoz" 
+                       download="Mensaje-Especial-Para-Ti.mp3" 
+                       class="btn-descarga-audio">
+                        <i class="fas fa-download"></i> Descargar Audio Directamente
+                    </a>
+                    <p class="leyenda-descarga">
+                        <i class="fas fa-info-circle"></i> Si el reproductor no funciona, descárgalo y ábrelo en tu música
+                    </p>
+                </div>
+                
                 <p class="leyenda-audio">
-                    <i class="fas fa-headphones"></i> Escucha con atención...
+                    <i class="fas fa-headphones"></i> Escucha con atención, es un mensaje especial...
                 </p>
             </div>
         </div>
@@ -294,10 +316,10 @@
         </div>
     </div>
 </div>
-
     <script src="script.js"></script>
 </body>
 </html>
+
 
 
 
