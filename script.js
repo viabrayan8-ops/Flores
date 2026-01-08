@@ -416,9 +416,11 @@ window.debug = {
         location.reload();
     }
 };
-// ===== PARTE FINAL =====
+// ===== PARTE FINAL COMPLETA =====
 function configurarParteFinal() {
-    // Botón "Parte Final" de la sección de fotos
+    console.log("✨ Configurando parte final...");
+    
+    // 1. Botón "Parte Final" de la sección de fotos
     const btnParteFinal = document.getElementById('btn-parte-final');
     if (btnParteFinal) {
         btnParteFinal.addEventListener('click', function() {
@@ -429,11 +431,12 @@ function configurarParteFinal() {
                 seccionFotos.classList.add('hidden');
                 seccionFinal.classList.remove('hidden');
                 iniciarFuegosArtificiales();
+                configurarAudioPersonal();
             }
         });
     }
     
-    // Botón "Volver a Fotos" desde la parte final
+    // 2. Botón "Volver a Fotos"
     const btnVolverFotos = document.getElementById('btn-volver-fotos');
     if (btnVolverFotos) {
         btnVolverFotos.addEventListener('click', function() {
@@ -447,7 +450,7 @@ function configurarParteFinal() {
         });
     }
     
-    // Botón "Repetir Todo" desde la parte final
+    // 3. Botón "Repetir Todo"
     const btnRepetirTodo = document.getElementById('btn-repetir-todo');
     if (btnRepetirTodo) {
         btnRepetirTodo.addEventListener('click', function() {
@@ -456,41 +459,69 @@ function configurarParteFinal() {
             }
         });
     }
+}
+
+// ===== AUDIO PERSONAL CONFIGURADO =====
+function configurarAudioPersonal() {
+    const audio = document.getElementById('audio-personal');
+    if (!audio) return;
     
-    // Configurar audio personal
-    const audioPersonal = document.getElementById('audio-personal');
-    if (audioPersonal) {
-        // Auto-reproducir cuando entre a la sección (con interacción del usuario)
-        document.getElementById('seccion-final').addEventListener('click', function iniciarAudio() {
-            audioPersonal.play().catch(e => console.log("Audio esperando interacción..."));
+    console.log("🎤 Configurando audio personal...");
+    
+    // Forzar carga del audio
+    audio.load();
+    
+    // Eventos para verificar estado
+    audio.addEventListener('canplaythrough', function() {
+        console.log("✅ Audio cargado completamente");
+    });
+    
+    audio.addEventListener('error', function(e) {
+        console.error("❌ Error en audio:", e);
+        console.log("Código de error:", audio.error ? audio.error.code : "desconocido");
+        
+        // Mostrar mensaje amigable
+        const descargaDiv = document.querySelector('.descarga-directa');
+        if (descargaDiv) {
+            descargaDiv.style.display = 'block';
+        }
+    });
+    
+    // Intentar reproducir automáticamente al entrar
+    const seccionFinal = document.getElementById('seccion-final');
+    if (seccionFinal) {
+        seccionFinal.addEventListener('click', function iniciarAudio() {
+            audio.play().then(() => {
+                console.log("▶️ Audio reproducido automáticamente");
+            }).catch(e => {
+                console.log("⏸️ Necesita interacción completa del usuario");
+            });
             this.removeEventListener('click', iniciarAudio);
         });
     }
 }
 
-// Función para crear fuegos artificiales
+// ===== FUEGOS ARTIFICIALES =====
 function iniciarFuegosArtificiales() {
     const fuegosContainer = document.getElementById('fuegos-artificiales');
     if (!fuegosContainer) return;
     
     fuegosContainer.innerHTML = '';
     
-    // Crear 15 fuegos artificiales (simples, no exagerados)
-    for (let i = 0; i < 15; i++) {
+    // Crear 10 fuegos artificiales iniciales
+    for (let i = 0; i < 10; i++) {
         setTimeout(() => {
             crearFuegoArtificial();
-        }, i * 500); // Cada medio segundo
+        }, i * 300);
     }
     
-    // Continuar creando fuegos cada 3 segundos
+    // Continuar creando fuegos cada 2.5 segundos
     const intervaloFuegos = setInterval(() => {
         crearFuegoArtificial();
-    }, 3000);
+    }, 2500);
     
-    // Detener cuando salga de la sección
-    document.getElementById('seccion-final').addEventListener('hidden', function() {
-        clearInterval(intervaloFuegos);
-    });
+    // Guardar intervalo para limpiar después
+    window.fuegosInterval = intervaloFuegos;
 }
 
 function crearFuegoArtificial() {
@@ -502,31 +533,29 @@ function crearFuegoArtificial() {
     
     // Posición aleatoria
     const x = Math.random() * 100;
-    const y = Math.random() * 50 + 20; // Entre 20% y 70% de altura
     
-    fuego.style.setProperty('--x', x + 'vw');
-    fuego.style.setProperty('--y', y + 'vh');
     fuego.style.left = `${x}vw`;
+    fuego.style.setProperty('--y', '30vh'); // Altura de explosión
     
-    // Color aleatorio (amarillos, naranjas, rojos)
-    const colores = ['#ffdd00', '#ffaa00', '#ff6b00', '#ff3333'];
+    // Color aleatorio (tonos amarillos/naranjas)
+    const colores = ['#FFD700', '#FFA500', '#FF8C00', '#FF4500'];
     const color = colores[Math.floor(Math.random() * colores.length)];
     
     fuego.style.background = color;
-    fuego.style.boxShadow = `0 0 10px ${color}, 0 0 20px ${color}`;
+    fuego.style.boxShadow = `0 0 8px ${color}, 0 0 16px ${color}`;
     
-    // Tamaño aleatorio
-    const size = Math.random() * 3 + 2; // Entre 2px y 5px
+    // Tamaño pequeño (no exagerado)
+    const size = Math.random() * 2 + 1; // 1-3px
     fuego.style.width = `${size}px`;
     fuego.style.height = `${size}px`;
     
-    // Duración aleatoria
-    const duracion = Math.random() * 1.5 + 1.5; // Entre 1.5s y 3s
+    // Duración
+    const duracion = Math.random() * 1 + 1.5; // 1.5-2.5s
     fuego.style.animationDuration = `${duracion}s`;
     
     fuegosContainer.appendChild(fuego);
     
-    // Eliminar después de la animación
+    // Eliminar después de animación
     setTimeout(() => {
         if (fuego.parentNode === fuegosContainer) {
             fuegosContainer.removeChild(fuego);
@@ -534,17 +563,15 @@ function crearFuegoArtificial() {
     }, duracion * 1000);
 }
 
-// ===== ACTUALIZAR LA FUNCIÓN configurarTodosLosBotones =====
-// Reemplaza la función configurarTodosLosBotones por esta:
+// ===== ACTUALIZAR configurarTodosLosBotones =====
 function configurarTodosLosBotones() {
     console.log("🔧 Configurando TODOS los botones...");
     
     // 1. BOTÓN DE MÚSICA A FOTOS
     const btnFinMusica = document.getElementById('btn-fin-musica');
-    console.log("¿Botón btn-fin-musica encontrado?", btnFinMusica ? "✅ Sí" : "❌ No");
     
     if (btnFinMusica) {
-        // REMOVER cualquier evento anterior
+        // Clonar para eliminar eventos anteriores
         btnFinMusica.replaceWith(btnFinMusica.cloneNode(true));
         const btnNuevo = document.getElementById('btn-fin-musica');
         
@@ -554,22 +581,28 @@ function configurarTodosLosBotones() {
             const seccionFotos = document.getElementById('seccion-fotos');
             
             if (seccionMusica && seccionFotos) {
-                console.log("📸 Redirigiendo a sección de fotos...");
                 seccionMusica.classList.add('hidden');
                 seccionFotos.classList.remove('hidden');
                 inicializarGaleriaSimple();
-            } else {
-                console.log("❌ No se encontraron secciones");
             }
         });
     }
     
     // 2. Configurar la parte final
     configurarParteFinal();
-            }
+}
+
+// ===== LIMPIAR FUEGOS AL SALIR =====
+// Agregar al inicio del script, después de las variables globales
+window.addEventListener('beforeunload', function() {
+    if (window.fuegosInterval) {
+        clearInterval(window.fuegosInterval);
+    }
+});
 
 console.log("🎁 Script cargado correctamente!");
 console.log("Usa debug.saltarACarta(), debug.saltarAMusica() o debug.saltarAFotos() para probar");
 console.log("Usa debug.testBoton() para verificar el botón");
+
 
 
