@@ -276,7 +276,7 @@ function inicializarGaleriaSimple() {
     // CONFIGURACIÓN GITHUB
     const USUARIO = "viabrayan8-ops";
     const REPO = "Fotos-especiales";
-    const TOTAL_FOTOS = 30;
+    const TOTAL_FOTOS = 40;
     
     const contenedorFotos = document.getElementById('contenedor-fotos');
     const btnAnterior = document.getElementById('btn-anterior');
@@ -420,3 +420,4 @@ window.debug = {
 console.log("🎁 Script cargado correctamente!");
 console.log("Usa debug.saltarACarta(), debug.saltarAMusica() o debug.saltarAFotos() para probar");
 console.log("Usa debug.testBoton() para verificar el botón");
+
