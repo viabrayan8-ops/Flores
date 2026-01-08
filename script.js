@@ -225,16 +225,19 @@ function configurarBotones() {
         });
     }
 }
-// GALERÍA SIMPLE - Versión directa y segura
+
+// GALERÍA SIMPLE - CON USUARIO CORRECTO
 function inicializarGaleriaSimple() {
-    // CONFIGURACIÓN EXACTA
-    const USUARIO = "viabrayan8";
+    // CONFIGURACIÓN CORREGIDA
+    const USUARIO = "viabrayan8-ops";  // ¡Corregido!
     const REPO = "Fotos-especiales";
     const TOTAL_FOTOS = 30;
     
     const contenedorFotos = document.getElementById('contenedor-fotos');
     const btnAnterior = document.getElementById('btn-anterior');
     const btnSiguiente = document.getElementById('btn-siguiente');
+    const btnParteFinal = document.getElementById('btn-parte-final');
+    const btnVolverMusica = document.getElementById('btn-volver-musica');
     const fotoActualSpan = document.getElementById('foto-actual');
     const totalFotosSpan = document.getElementById('total-fotos');
     
@@ -246,21 +249,9 @@ function inicializarGaleriaSimple() {
     // Actualizar contador
     totalFotosSpan.textContent = TOTAL_FOTOS;
     
-    // Función para construir URL
+    // Función para construir URL CORRECTA
     function getFotoURL(numero) {
         return `https://raw.githubusercontent.com/${USUARIO}/${REPO}/main/IMG${numero}.jpg`;
-    }
-    
-    // Función para verificar si una imagen existe
-    function verificarImagenExiste(url, callback) {
-        const img = new Image();
-        img.onload = function() {
-            callback(true, url);
-        };
-        img.onerror = function() {
-            callback(false, url);
-        };
-        img.src = url;
     }
     
     // Mostrar foto
@@ -272,8 +263,8 @@ function inicializarGaleriaSimple() {
         fotoActualSpan.textContent = fotoActual;
         
         // Actualizar botones
-        btnAnterior.disabled = (fotoActual === 1);
-        btnSiguiente.disabled = (fotoActual === TOTAL_FOTOS);
+        if (btnAnterior) btnAnterior.disabled = (fotoActual === 1);
+        if (btnSiguiente) btnSiguiente.disabled = (fotoActual === TOTAL_FOTOS);
         
         // URL de la imagen
         const fotoURL = getFotoURL(numero);
@@ -282,47 +273,66 @@ function inicializarGaleriaSimple() {
         const img = document.createElement('img');
         img.className = 'foto-grande';
         img.alt = `Recuerdo ${numero}`;
+        img.loading = 'lazy';
+        
+        // Efecto de carga
         img.style.opacity = '0';
         img.style.transition = 'opacity 0.5s';
-        
-        // Verificar si la imagen existe
-        verificarImagenExiste(fotoURL, function(existe, url) {
-            if (existe) {
-                console.log(`✅ Imagen ${numero} cargada: ${url}`);
-                img.src = url;
-                img.onload = function() {
-                    img.style.opacity = '1';
-                };
-            } else {
-                console.log(`⚠️ Imagen ${numero} no encontrada, usando placeholder`);
-                img.src = `https://picsum.photos/800/600?random=${numero}&blur=1`;
-                img.alt = `Placeholder ${numero}`;
-                img.style.opacity = '1';
-            }
-        });
-        
-        img.onerror = function() {
-            // Doble fallback
-            this.src = `https://picsum.photos/800/600?random=${numero}&blur=1`;
-        };
         
         // Mostrar en contenedor
         contenedorFotos.innerHTML = '';
         contenedorFotos.appendChild(img);
+        
+        // Cargar imagen
+        img.onload = function() {
+            this.style.opacity = '1';
+            console.log(`✅ Imagen ${numero} cargada`);
+        };
+        
+        img.onerror = function() {
+            console.log(`⚠️ Imagen ${numero} no encontrada: ${fotoURL}`);
+            // Mostrar placeholder
+            this.src = `https://picsum.photos/800/600?random=${numero}&blur=1`;
+            this.alt = `Placeholder ${numero}`;
+            this.style.opacity = '1';
+        };
+        
+        // Asignar fuente
+        img.src = fotoURL;
     }
     
     // Configurar eventos
-    btnAnterior.addEventListener('click', function() {
-        if (fotoActual > 1) {
-            mostrarFoto(fotoActual - 1);
-        }
-    });
+    if (btnAnterior) {
+        btnAnterior.addEventListener('click', function() {
+            if (fotoActual > 1) mostrarFoto(fotoActual - 1);
+        });
+    }
     
-    btnSiguiente.addEventListener('click', function() {
-        if (fotoActual < TOTAL_FOTOS) {
-            mostrarFoto(fotoActual + 1);
-        }
-    });
+    if (btnSiguiente) {
+        btnSiguiente.addEventListener('click', function() {
+            if (fotoActual < TOTAL_FOTOS) mostrarFoto(fotoActual + 1);
+        });
+    }
+    
+    if (btnVolverMusica) {
+        btnVolverMusica.addEventListener('click', function() {
+            const seccionMusica = document.getElementById('seccion-musica');
+            const seccionFotos = document.getElementById('seccion-fotos');
+            
+            if (seccionMusica && seccionFotos) {
+                seccionFotos.classList.add('hidden');
+                seccionMusica.classList.remove('hidden');
+            }
+        });
+    }
+    
+    if (btnParteFinal) {
+        btnParteFinal.addEventListener('click', function() {
+            // Por ahora solo un alert, después crearemos la sección
+            alert('✨ La parte final se mostrará pronto...');
+            console.log('Botón "Parte Final" clickeado - Listo para crear la sección final');
+        });
+    }
     
     // Navegación con teclado
     document.addEventListener('keydown', function(event) {
@@ -338,19 +348,18 @@ function inicializarGaleriaSimple() {
     // Mostrar primera foto
     mostrarFoto(1);
     
-    // Precargar todas las imágenes (para mejor experiencia)
+    // Precargar todas las imágenes
     function precargarImagenes() {
-        console.log("🔄 Precargando imágenes...");
+        console.log('🔄 Precargando imágenes de GitHub...');
         for (let i = 1; i <= TOTAL_FOTOS; i++) {
             const img = new Image();
             img.src = getFotoURL(i);
         }
     }
     
-    // Iniciar precarga después de mostrar primera
+    // Iniciar precarga
     setTimeout(precargarImagenes, 1000);
 }
-
 // ===== FUNCIONES DE DEBUG (para probar) =====
 window.debug = {
     saltarACarta: function() {
@@ -370,5 +379,6 @@ window.debug = {
 
 console.log("🎁 Script cargado correctamente!");
 console.log("Usa debug.saltarACarta() o debug.saltarAMusica() para probar");
+
 
 
