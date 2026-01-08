@@ -367,8 +367,46 @@ function inicializarGaleriaSimple() {
 }
 
 // ===== CONFIGURAR TODOS LOS BOTONES =====
+// ===== CONFIGURAR TODOS LOS BOTONES =====
 function configurarBotones() {
-    configurarGaleriaFotos();
+    // Botón "Gracias por escuchar" DEBE llevar a FOTOS
+    const btnFinMusica = document.getElementById('btn-fin-musica');
+    if (btnFinMusica) {
+        btnFinMusica.addEventListener('click', function() {
+            const seccionMusica = document.getElementById('seccion-musica');
+            const seccionFotos = document.getElementById('seccion-fotos');
+            
+            if (seccionMusica && seccionFotos) {
+                seccionMusica.classList.add('hidden');
+                seccionFotos.classList.remove('hidden');
+                inicializarGaleriaSimple();
+            }
+        });
+    }
+    
+    // Configurar también los otros botones de la galería
+    const btnVolverMusica = document.getElementById('btn-volver-musica');
+    const btnParteFinal = document.getElementById('btn-parte-final');
+    
+    if (btnVolverMusica) {
+        btnVolverMusica.addEventListener('click', function() {
+            const seccionMusica = document.getElementById('seccion-musica');
+            const seccionFotos = document.getElementById('seccion-fotos');
+            
+            if (seccionMusica && seccionFotos) {
+                seccionFotos.classList.add('hidden');
+                seccionMusica.classList.remove('hidden');
+            }
+        });
+    }
+    
+    if (btnParteFinal) {
+        btnParteFinal.addEventListener('click', function() {
+            // Por ahora solo alert, después haremos la sección final
+            alert('✨ La parte final se mostrará pronto...');
+            console.log('Botón "Parte Final" clickeado - Listo para crear la sección final');
+        });
+    }
 }
 
 // ===== DEBUG =====
@@ -395,3 +433,4 @@ window.debug = {
 
 console.log("🎁 Script cargado correctamente!");
 console.log("Usa debug.saltarACarta(), debug.saltarAMusica() o debug.saltarAFotos() para probar");
+
