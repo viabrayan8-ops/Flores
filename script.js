@@ -216,28 +216,58 @@ function efectoEscrituraCarta() {
     });
 }
 
-// ===== CONFIGURAR BOTONES MUSICA =====
-function configurarBotones() {
+// ===== GALERÍA DE FOTOS =====
+function configurarGaleriaFotos() {
     const btnFinMusica = document.getElementById('btn-fin-musica');
+    const btnVolverMusica = document.getElementById('btn-volver-musica');
+    const btnParteFinal = document.getElementById('btn-parte-final');
+    
+    // Botón de la sección música para ir a fotos
     if (btnFinMusica) {
         btnFinMusica.addEventListener('click', function() {
-            alert('🎵 ¡Gracias por escuchar nuestra playlist especial!\n\nEl viaje continúa... ✨');
+            const seccionMusica = document.getElementById('seccion-musica');
+            const seccionFotos = document.getElementById('seccion-fotos');
+            
+            if (seccionMusica && seccionFotos) {
+                seccionMusica.classList.add('hidden');
+                seccionFotos.classList.remove('hidden');
+                inicializarGaleriaSimple();
+            }
+        });
+    }
+    
+    // Botón para volver a música desde fotos
+    if (btnVolverMusica) {
+        btnVolverMusica.addEventListener('click', function() {
+            const seccionMusica = document.getElementById('seccion-musica');
+            const seccionFotos = document.getElementById('seccion-fotos');
+            
+            if (seccionMusica && seccionFotos) {
+                seccionFotos.classList.add('hidden');
+                seccionMusica.classList.remove('hidden');
+            }
+        });
+    }
+    
+    // Botón para ir a parte final
+    if (btnParteFinal) {
+        btnParteFinal.addEventListener('click', function() {
+            alert('✨ La parte final se mostrará pronto...');
+            console.log('Botón "Parte Final" clickeado');
         });
     }
 }
 
-// GALERÍA SIMPLE - CON USUARIO CORRECTO
+// GALERÍA SIMPLE
 function inicializarGaleriaSimple() {
-    // CONFIGURACIÓN CORREGIDA
-    const USUARIO = "viabrayan8-ops";  // ¡Corregido!
+    // CONFIGURACIÓN GITHUB
+    const USUARIO = "viabrayan8-ops";
     const REPO = "Fotos-especiales";
     const TOTAL_FOTOS = 30;
     
     const contenedorFotos = document.getElementById('contenedor-fotos');
     const btnAnterior = document.getElementById('btn-anterior');
     const btnSiguiente = document.getElementById('btn-siguiente');
-    const btnParteFinal = document.getElementById('btn-parte-final');
-    const btnVolverMusica = document.getElementById('btn-volver-musica');
     const fotoActualSpan = document.getElementById('foto-actual');
     const totalFotosSpan = document.getElementById('total-fotos');
     
@@ -249,7 +279,7 @@ function inicializarGaleriaSimple() {
     // Actualizar contador
     totalFotosSpan.textContent = TOTAL_FOTOS;
     
-    // Función para construir URL CORRECTA
+    // Función para construir URL
     function getFotoURL(numero) {
         return `https://raw.githubusercontent.com/${USUARIO}/${REPO}/main/IMG${numero}.jpg`;
     }
@@ -263,8 +293,8 @@ function inicializarGaleriaSimple() {
         fotoActualSpan.textContent = fotoActual;
         
         // Actualizar botones
-        if (btnAnterior) btnAnterior.disabled = (fotoActual === 1);
-        if (btnSiguiente) btnSiguiente.disabled = (fotoActual === TOTAL_FOTOS);
+        btnAnterior.disabled = (fotoActual === 1);
+        btnSiguiente.disabled = (fotoActual === TOTAL_FOTOS);
         
         // URL de la imagen
         const fotoURL = getFotoURL(numero);
@@ -290,8 +320,7 @@ function inicializarGaleriaSimple() {
         };
         
         img.onerror = function() {
-            console.log(`⚠️ Imagen ${numero} no encontrada: ${fotoURL}`);
-            // Mostrar placeholder
+            console.log(`⚠️ Imagen ${numero} no encontrada`);
             this.src = `https://picsum.photos/800/600?random=${numero}&blur=1`;
             this.alt = `Placeholder ${numero}`;
             this.style.opacity = '1';
@@ -302,37 +331,13 @@ function inicializarGaleriaSimple() {
     }
     
     // Configurar eventos
-    if (btnAnterior) {
-        btnAnterior.addEventListener('click', function() {
-            if (fotoActual > 1) mostrarFoto(fotoActual - 1);
-        });
-    }
+    btnAnterior.addEventListener('click', function() {
+        if (fotoActual > 1) mostrarFoto(fotoActual - 1);
+    });
     
-    if (btnSiguiente) {
-        btnSiguiente.addEventListener('click', function() {
-            if (fotoActual < TOTAL_FOTOS) mostrarFoto(fotoActual + 1);
-        });
-    }
-    
-    if (btnVolverMusica) {
-        btnVolverMusica.addEventListener('click', function() {
-            const seccionMusica = document.getElementById('seccion-musica');
-            const seccionFotos = document.getElementById('seccion-fotos');
-            
-            if (seccionMusica && seccionFotos) {
-                seccionFotos.classList.add('hidden');
-                seccionMusica.classList.remove('hidden');
-            }
-        });
-    }
-    
-    if (btnParteFinal) {
-        btnParteFinal.addEventListener('click', function() {
-            // Por ahora solo un alert, después crearemos la sección
-            alert('✨ La parte final se mostrará pronto...');
-            console.log('Botón "Parte Final" clickeado - Listo para crear la sección final');
-        });
-    }
+    btnSiguiente.addEventListener('click', function() {
+        if (fotoActual < TOTAL_FOTOS) mostrarFoto(fotoActual + 1);
+    });
     
     // Navegación con teclado
     document.addEventListener('keydown', function(event) {
@@ -350,7 +355,7 @@ function inicializarGaleriaSimple() {
     
     // Precargar todas las imágenes
     function precargarImagenes() {
-        console.log('🔄 Precargando imágenes de GitHub...');
+        console.log('🔄 Precargando imágenes...');
         for (let i = 1; i <= TOTAL_FOTOS; i++) {
             const img = new Image();
             img.src = getFotoURL(i);
@@ -360,7 +365,13 @@ function inicializarGaleriaSimple() {
     // Iniciar precarga
     setTimeout(precargarImagenes, 1000);
 }
-// ===== FUNCIONES DE DEBUG (para probar) =====
+
+// ===== CONFIGURAR TODOS LOS BOTONES =====
+function configurarBotones() {
+    configurarGaleriaFotos();
+}
+
+// ===== DEBUG =====
 window.debug = {
     saltarACarta: function() {
         document.querySelector('.container').style.display = 'none';
@@ -372,13 +383,15 @@ window.debug = {
         document.getElementById('carta-container').classList.add('hidden');
         document.getElementById('seccion-musica').classList.remove('hidden');
     },
+    saltarAFotos: function() {
+        document.getElementById('seccion-musica').classList.add('hidden');
+        document.getElementById('seccion-fotos').classList.remove('hidden');
+        inicializarGaleriaSimple();
+    },
     reiniciar: function() {
         location.reload();
     }
 };
 
 console.log("🎁 Script cargado correctamente!");
-console.log("Usa debug.saltarACarta() o debug.saltarAMusica() para probar");
-
-
-
+console.log("Usa debug.saltarACarta(), debug.saltarAMusica() o debug.saltarAFotos() para probar");
