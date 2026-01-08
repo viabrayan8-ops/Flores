@@ -416,8 +416,160 @@ window.debug = {
         location.reload();
     }
 };
+// ===== PARTE FINAL =====
+function configurarParteFinal() {
+    // Botón "Parte Final" de la sección de fotos
+    const btnParteFinal = document.getElementById('btn-parte-final');
+    if (btnParteFinal) {
+        btnParteFinal.addEventListener('click', function() {
+            const seccionFotos = document.getElementById('seccion-fotos');
+            const seccionFinal = document.getElementById('seccion-final');
+            
+            if (seccionFotos && seccionFinal) {
+                seccionFotos.classList.add('hidden');
+                seccionFinal.classList.remove('hidden');
+                iniciarFuegosArtificiales();
+            }
+        });
+    }
+    
+    // Botón "Volver a Fotos" desde la parte final
+    const btnVolverFotos = document.getElementById('btn-volver-fotos');
+    if (btnVolverFotos) {
+        btnVolverFotos.addEventListener('click', function() {
+            const seccionFotos = document.getElementById('seccion-fotos');
+            const seccionFinal = document.getElementById('seccion-final');
+            
+            if (seccionFotos && seccionFinal) {
+                seccionFinal.classList.add('hidden');
+                seccionFotos.classList.remove('hidden');
+            }
+        });
+    }
+    
+    // Botón "Repetir Todo" desde la parte final
+    const btnRepetirTodo = document.getElementById('btn-repetir-todo');
+    if (btnRepetirTodo) {
+        btnRepetirTodo.addEventListener('click', function() {
+            if (confirm('¿Quieres ver todo el regalo desde el inicio?')) {
+                location.reload();
+            }
+        });
+    }
+    
+    // Configurar audio personal
+    const audioPersonal = document.getElementById('audio-personal');
+    if (audioPersonal) {
+        // Auto-reproducir cuando entre a la sección (con interacción del usuario)
+        document.getElementById('seccion-final').addEventListener('click', function iniciarAudio() {
+            audioPersonal.play().catch(e => console.log("Audio esperando interacción..."));
+            this.removeEventListener('click', iniciarAudio);
+        });
+    }
+}
+
+// Función para crear fuegos artificiales
+function iniciarFuegosArtificiales() {
+    const fuegosContainer = document.getElementById('fuegos-artificiales');
+    if (!fuegosContainer) return;
+    
+    fuegosContainer.innerHTML = '';
+    
+    // Crear 15 fuegos artificiales (simples, no exagerados)
+    for (let i = 0; i < 15; i++) {
+        setTimeout(() => {
+            crearFuegoArtificial();
+        }, i * 500); // Cada medio segundo
+    }
+    
+    // Continuar creando fuegos cada 3 segundos
+    const intervaloFuegos = setInterval(() => {
+        crearFuegoArtificial();
+    }, 3000);
+    
+    // Detener cuando salga de la sección
+    document.getElementById('seccion-final').addEventListener('hidden', function() {
+        clearInterval(intervaloFuegos);
+    });
+}
+
+function crearFuegoArtificial() {
+    const fuegosContainer = document.getElementById('fuegos-artificiales');
+    if (!fuegosContainer) return;
+    
+    const fuego = document.createElement('div');
+    fuego.className = 'fuego-artificial';
+    
+    // Posición aleatoria
+    const x = Math.random() * 100;
+    const y = Math.random() * 50 + 20; // Entre 20% y 70% de altura
+    
+    fuego.style.setProperty('--x', x + 'vw');
+    fuego.style.setProperty('--y', y + 'vh');
+    fuego.style.left = `${x}vw`;
+    
+    // Color aleatorio (amarillos, naranjas, rojos)
+    const colores = ['#ffdd00', '#ffaa00', '#ff6b00', '#ff3333'];
+    const color = colores[Math.floor(Math.random() * colores.length)];
+    
+    fuego.style.background = color;
+    fuego.style.boxShadow = `0 0 10px ${color}, 0 0 20px ${color}`;
+    
+    // Tamaño aleatorio
+    const size = Math.random() * 3 + 2; // Entre 2px y 5px
+    fuego.style.width = `${size}px`;
+    fuego.style.height = `${size}px`;
+    
+    // Duración aleatoria
+    const duracion = Math.random() * 1.5 + 1.5; // Entre 1.5s y 3s
+    fuego.style.animationDuration = `${duracion}s`;
+    
+    fuegosContainer.appendChild(fuego);
+    
+    // Eliminar después de la animación
+    setTimeout(() => {
+        if (fuego.parentNode === fuegosContainer) {
+            fuegosContainer.removeChild(fuego);
+        }
+    }, duracion * 1000);
+}
+
+// ===== ACTUALIZAR LA FUNCIÓN configurarTodosLosBotones =====
+// Reemplaza la función configurarTodosLosBotones por esta:
+function configurarTodosLosBotones() {
+    console.log("🔧 Configurando TODOS los botones...");
+    
+    // 1. BOTÓN DE MÚSICA A FOTOS
+    const btnFinMusica = document.getElementById('btn-fin-musica');
+    console.log("¿Botón btn-fin-musica encontrado?", btnFinMusica ? "✅ Sí" : "❌ No");
+    
+    if (btnFinMusica) {
+        // REMOVER cualquier evento anterior
+        btnFinMusica.replaceWith(btnFinMusica.cloneNode(true));
+        const btnNuevo = document.getElementById('btn-fin-musica');
+        
+        btnNuevo.addEventListener('click', function() {
+            console.log("🎵 Botón 'Gracias por escuchar' clickeado");
+            const seccionMusica = document.getElementById('seccion-musica');
+            const seccionFotos = document.getElementById('seccion-fotos');
+            
+            if (seccionMusica && seccionFotos) {
+                console.log("📸 Redirigiendo a sección de fotos...");
+                seccionMusica.classList.add('hidden');
+                seccionFotos.classList.remove('hidden');
+                inicializarGaleriaSimple();
+            } else {
+                console.log("❌ No se encontraron secciones");
+            }
+        });
+    }
+    
+    // 2. Configurar la parte final
+    configurarParteFinal();
+            }
 
 console.log("🎁 Script cargado correctamente!");
 console.log("Usa debug.saltarACarta(), debug.saltarAMusica() o debug.saltarAFotos() para probar");
 console.log("Usa debug.testBoton() para verificar el botón");
+
 
