@@ -225,7 +225,202 @@ function configurarBotones() {
         });
     }
 }
+// ===== GALERÍAS DE FOTOS (VERSIÓN SIMPLE) =====
+function configurarGaleriaFotos() {
+    const btnFinMusica = document.getElementById('btn-fin-musica');
+    const btnVolverMusica = document.getElementById('btn-volver-musica');
+    
+    // Botón de la sección música para ir a fotos
+    if (btnFinMusica) {
+        btnFinMusica.addEventListener('click', function() {
+            const seccionMusica = document.getElementById('seccion-musica');
+            const seccionFotos = document.getElementById('seccion-fotos');
+            
+            if (seccionMusica && seccionFotos) {
+                seccionMusica.classList.add('hidden');
+                seccionFotos.classList.remove('hidden');
+                inicializarGaleriaSimple();
+            }
+        });
+    }
+    
+    // Botón para volver a música desde fotos
+    if (btnVolverMusica) {
+        btnVolverMusica.addEventListener('click', function() {
+            const seccionMusica = document.getElementById('seccion-musica');
+            const seccionFotos = document.getElementById('seccion-fotos');
+            
+            if (seccionMusica && seccionFotos) {
+                seccionFotos.classList.add('hidden');
+                seccionMusica.classList.remove('hidden');
+            }
+        });
+    }
+}
 
+// GALERÍA SIMPLE - Todas las fotos en una sola vista
+function inicializarGaleriaSimple() {
+    // CONFIGURACIÓN GITHUB
+    const TU_USUARIO_GITHUB = "viabrayan8";
+    const TU_REPO = "Fotos-especiales";
+    const RUTA = "main";
+    const TOTAL_FOTOS = 30;
+    const EXTENSION = ".jpg";
+    
+    const contenedorFotos = document.getElementById('contenedor-fotos');
+    const btnAnterior = document.getElementById('btn-anterior');
+    const btnSiguiente = document.getElementById('btn-siguiente');
+    const fotoActualSpan = document.getElementById('foto-actual');
+    const totalFotosSpan = document.getElementById('total-fotos');
+    
+    if (!contenedorFotos) return;
+    
+    // Variables de estado
+    let fotoActual = 1;
+    let fotosCargadas = [];
+    
+    // Actualizar contador
+    totalFotosSpan.textContent = TOTAL_FOTOS;
+    
+    // Mostrar cargando inicial
+    contenedorFotos.innerHTML = `
+        <div class="cargando">
+            <i class="fas fa-spinner fa-spin cargando-animacion"></i>
+            Cargando recuerdos especiales...
+        </div>
+    `;
+    
+    // Precargar todas las imágenes
+    function precargarImagenes() {
+        fotosCargadas = [];
+        let cargadas = 0;
+        
+        for (let i = 1; i <= TOTAL_FOTOS; i++) {
+            const img = new Image();
+            img.src = `https://raw.githubusercontent.com/${TU_USUARIO_GITHUB}/${TU_REPO}/${RUTA}/IMG${i}${EXTENSION}`;
+            img.alt = `Recuerdo ${i}`;
+            
+            img.onload = function() {
+                cargadas++;
+                fotosCargadas[i] = img.src;
+                
+                // Si es la primera imagen, mostrarla
+                if (i === 1) {
+                    mostrarFoto(1);
+                }
+                
+                // Si todas están cargadas, actualizar UI
+                if (cargadas === TOTAL_FOTOS) {
+                    console.log(`✅ Todas las ${TOTAL_FOTOS} fotos cargadas`);
+                }
+            };
+            
+            img.onerror = function() {
+                console.log(`⚠️ Foto ${i} no encontrada, usando placeholder`);
+                fotosCargadas[i] = `https://picsum.photos/800/600?random=${i}&blur=2`;
+                cargadas++;
+                
+                if (i === 1) {
+                    mostrarFoto(1);
+                }
+            };
+        }
+    }
+    
+    // Mostrar foto específica
+    function mostrarFoto(numero) {
+        if (numero < 1) numero = 1;
+        if (numero > TOTAL_FOTOS) numero = TOTAL_FOTOS;
+        
+        fotoActual = numero;
+        fotoActualSpan.textContent = fotoActual;
+        
+        // Actualizar estado de botones
+        btnAnterior.disabled = (fotoActual === 1);
+        btnSiguiente.disabled = (fotoActual === TOTAL_FOTOS);
+        
+        // Mostrar imagen
+        const fotoURL = fotosCargadas[fotoActual] || 
+                       `https://raw.githubusercontent.com/${TU_USUARIO_GITHUB}/${TU_REPO}/${RUTA}/IMG${fotoActual}${EXTENSION}`;
+        
+        contenedorFotos.innerHTML = `
+            <img src="${fotoURL}" 
+                 alt="Recuerdo ${fotoActual}" 
+                 class="foto-grande"
+                 loading="lazy"
+                 onerror="this.onerror=null; this.src='https://picsum.photos/800/600?random=${fotoActual}&blur=2'">
+        `;
+    }
+    
+    // Event listeners para botones
+    if (btnAnterior) {
+        btnAnterior.addEventListener('click', function() {
+            if (fotoActual > 1) {
+                mostrarFoto(fotoActual - 1);
+            }
+        });
+    }
+    
+    if (btnSiguiente) {
+        btnSiguiente.addEventListener('click', function() {
+            if (fotoActual < TOTAL_FOTOS) {
+                mostrarFoto(fotoActual + 1);
+            }
+        });
+    }
+    
+    // Navegación con teclado
+    document.addEventListener('keydown', function(event) {
+        if (document.getElementById('seccion-fotos').classList.contains('hidden')) return;
+        
+        if (event.key === 'ArrowLeft' || event.key === 'a') {
+            mostrarFoto(fotoActual - 1);
+        } else if (event.key === 'ArrowRight' || event.key === 'd') {
+            mostrarFoto(fotoActual + 1);
+        }
+    });
+    
+    // Iniciar precarga
+    precargarImagenes();
+    
+    // Mostrar primera foto después de un breve delay
+    setTimeout(() => {
+        if (contenedorFotos.innerHTML.includes('Cargando')) {
+            mostrarFoto(1);
+        }
+    }, 1000);
+}
+
+// ===== MODIFICAR CONFIGURACIÓN BOTONES MUSICA =====
+function configurarBotones() {
+    // Configurar galerías de fotos
+    configurarGaleriaFotos();
+}
+
+// ===== DEBUG ACTUALIZADO =====
+window.debug = {
+    saltarACarta: function() {
+        document.querySelector('.container').style.display = 'none';
+        document.getElementById('particles').style.display = 'none';
+        document.querySelector('.music-controls').style.display = 'none';
+        document.getElementById('carta-container').classList.remove('hidden');
+    },
+    saltarAMusica: function() {
+        document.getElementById('carta-container').classList.add('hidden');
+        document.getElementById('seccion-musica').classList.remove('hidden');
+    },
+    saltarAFotos: function() {
+        document.getElementById('seccion-musica').classList.add('hidden');
+        document.getElementById('seccion-fotos').classList.remove('hidden');
+        inicializarGaleriaSimple();
+    },
+    reiniciar: function() {
+        location.reload();
+    }
+};
+
+console.log("🎁 Script cargado correctamente!");
+console.log("Usa debug.saltarACarta(), debug.saltarAMusica() o debug.saltarAFotos() para probar");
 // ===== FUNCIONES DE DEBUG (para probar) =====
 window.debug = {
     saltarACarta: function() {
@@ -245,3 +440,4 @@ window.debug = {
 
 console.log("🎁 Script cargado correctamente!");
 console.log("Usa debug.saltarACarta() o debug.saltarAMusica() para probar");
+
