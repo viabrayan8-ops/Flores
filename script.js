@@ -1,14 +1,9 @@
 // ===== CONFIGURACIÓN SIMPLE =====
 const textos = [
     "Para mi persona especial...",
-    "La que ilumina mis días desde Colombia 🇨🇴",
-    "Desde Perú a Colombia ...",
-    "🇵🇪🫂🇨🇴",
-    "Hola, mi pequeña 🤍",
-    "Estos 4 meses han sido mágicos",
-    "Cada mensaje, cada chismesito, cada momento...",
-    "Todo contigo es especial ✨",
-    "Grax por todo :3",
+    "Hola, Mery 🤍",
+    "text",
+    "tex",
     "Eso seria todo :D",
     "...",
     "Nah jaja , falta algo más ",
