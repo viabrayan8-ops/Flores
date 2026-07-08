@@ -16,38 +16,29 @@ const textos = [
 // ===== VARIABLES GLOBALES =====
 let indexTexto = 0;
 let musicaFondo;
-
 // ===== INICIAR TODO CUANDO LA PÁGINA CARGUE =====
 document.addEventListener('DOMContentLoaded', function() {
     console.log("✅ Página cargada, iniciando...");
-    
     // Iniciar música de fondo
     iniciarMusicaFondo();
-    
     // Crear partículas
     crearParticulas();
-    
     // Mostrar primer texto
     mostrarSiguienteTexto();
-    
     // Configurar TODOS los botones de una sola vez
     configurarTodosLosBotones();
 });
-
 // ===== MÚSICA DE FONDO =====
 function iniciarMusicaFondo() {
     musicaFondo = document.getElementById('musica');
     const musicToggle = document.getElementById('music-toggle');
     const musicLabel = document.querySelector('.music-label');
-    
     if (!musicaFondo || !musicToggle) return;
-    
     // Auto-iniciar con primer clic
     document.addEventListener('click', function iniciarConClick() {
         musicaFondo.play().catch(e => console.log("Esperando interacción..."));
         document.removeEventListener('click', iniciarConClick);
     });
-    
     // Control de play/pause
     musicToggle.addEventListener('click', function() {
         if (musicaFondo.paused) {
