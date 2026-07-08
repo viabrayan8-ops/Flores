@@ -13,7 +13,6 @@ const textos = [
     "¡Esperamos que te guste! 💫",
     "3... 2... 1... ✨"
 ];
-
 // ===== VARIABLES GLOBALES =====
 let indexTexto = 0;
 let musicaFondo;
